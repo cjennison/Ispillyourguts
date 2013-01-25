@@ -18,6 +18,7 @@ EntityEnemy = ig.Entity.extend({
 	health: 10,
 	
 	awareness: 20,
+	alerted:false,
 	
 	speed: 14,
 	flip: false,
@@ -30,6 +31,10 @@ EntityEnemy = ig.Entity.extend({
 		this.addAnim( 'crawl', 0.08, [0] );
 	},
 	
+	setTargetAlarm:function(alarm){
+	
+	},
+	
 	
 	update: function() {
 		// near an edge? return!
@@ -40,10 +45,16 @@ EntityEnemy = ig.Entity.extend({
 		) {
 			this.flip = !this.flip;
 		}
-		
-		var xdir = this.flip ? -1 : 1;
-		this.vel.x = this.speed * xdir;
-        this.checkSight();
+		if(!this.alerted){
+			var xdir = this.flip ? -1 : 1;
+			this.vel.x = this.speed * xdir;
+        	this.checkSight();
+        }
+        if(this.alerted){
+        	//Get Alarm Position, Go to it.
+        	//Proceed to Freak Out                                                                                                                                                                                      LILDAWG
+        	
+        }
 		
 		this.parent();
 	},
@@ -61,6 +72,7 @@ EntityEnemy = ig.Entity.extend({
 			if((player.pos.x > (this.pos.x - this.awareness)) && player.pos.x < this.pos.x){
 				//FULL
 				sightType = "full";
+				this.alerted = true;
 			} else if ((player.pos.x > (this.pos.x - (this.awareness*2))) && player.pos.x < this.pos.x){
 				//HALF
 				sightType = "half";

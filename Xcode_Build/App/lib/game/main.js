@@ -11,6 +11,7 @@ ig.module(
     'game.entities.ui.detectioneye',
     'game.entities.ladder',
     'game.entities.door',
+    'game.entities.alarm',
     'game.levels.Hospital'
 )
 .defines(function(){
