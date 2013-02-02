@@ -43,7 +43,7 @@ HospitalLevel = ig.Game.extend({
                  new ig.TouchButton('left', 0, yPos, 40, 48, this.buttonImage, 0),
                  new ig.TouchButton('right', 40, yPos, 40, 48, this.buttonImage, 1),
                  new ig.TouchButton('up', 80, yPos, 40, 48, this.buttonImage, 3),
-                 new ig.TouchButton('shoot', ig.system.width - 40, yPos, 40, 48, this.buttonImage, 2),
+                 new ig.TouchButton('quickAttack', ig.system.width - 40, yPos, 40, 48, this.buttonImage, 2),
                  new ig.TouchButton('jump', ig.system.width - 80, yPos, 40, 48, this.buttonImage, 3)
              ];
          }
@@ -67,8 +67,10 @@ HospitalLevel = ig.Game.extend({
                         
          this.loadLevel(LevelHospital);
          //this.spawnEntity(EntityPlayer, 32, 480);
-         this.spawnEntity(EntityEnemy, 400, 460);
-         this.spawnEntity(EntityDetectionEye, 100, 0);
+         var nurse = this.spawnEntity(EntityEnemy, 400, 460);
+         
+         var alarm = this.getEntitiesByType(EntityAlarm)[0];
+         nurse.setTargetAlarm(alarm);
 	},
 	
 	update: function() {

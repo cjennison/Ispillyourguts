@@ -20,7 +20,7 @@ EntityPlayer = ig.Entity.extend({
 	checkAgainst: ig.Entity.TYPE.B,
 	collides: ig.Entity.COLLIDES.PASSIVE,
 	
-	animSheet: new ig.AnimationSheet( 'media/characters/characterDennis.png', 32, 47 ),
+	animSheet: new ig.AnimationSheet( 'media/characters/characterDennis.png', 60, 47 ),
 	
 	
 	// These are our own properties. They are not defined in the base
@@ -32,18 +32,26 @@ EntityPlayer = ig.Entity.extend({
 	health: 10,
 	canClimb: false,
     isClimbing: false,
+    attacking: false,
+    crouching: false,
     momentumDirection: {'x':0,'y':0},
     ladderReleaseTimer: new ig.Timer(0.0),
     ladderSpeed: 75,
+    
+    attackTimer:null,
 	
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
 		
 		// Add the animations
 		this.addAnim( 'idle', 1, [0,1,2,1] );
-		this.addAnim( 'run', 0.1, [4,5,6,7,8,9,10] );
-		this.addAnim( 'jump', 1, [9] );
+		this.addAnim( 'run', 0.1, [3,4,5,6,7,8] );
+		this.addAnim( 'jump', 1, [8] );
 		this.addAnim( 'fall', 0.4, [6,7] );
+		this.addAnim('crouch', 0.1, [11,12,13]);
+		this.addAnim('crouchidle', 1, [13]);
+		this.addAnim('crouchwalk', 0.1, [13,14,15]);
+		this.addAnim('quickAttack', 0.1, [20,21,22,23,24], false);
 		
 		//if (!ig.global.wm)ig.game.sortEntitiesDeferred();
 		
@@ -54,6 +62,13 @@ EntityPlayer = ig.Entity.extend({
 		
 		// move left or right
 		var accel = this.standing ? this.accelGround : this.accelAir;
+		if(this.crouching){
+			this.maxVel.x = 50;
+			accel = accel/4;
+		} else {
+			this.maxVel.x = 100;
+
+		}
 		if( ig.input.state('left') ) {
 			this.accel.x = -accel;
 			this.flip = true;
@@ -108,23 +123,45 @@ EntityPlayer = ig.Entity.extend({
         if (this.standing)this.ladderReleaseTimer.set(0.0);
         
 		
-		// shoot
-		if( ig.input.pressed('shoot') ) {
-			ig.game.spawnEntity( EntitySlimeGrenade, this.pos.x, this.pos.y, {flip:this.flip} );
+		// attack
+		if( ig.input.pressed('quickAttack') ) {
+			this.attacking = true;
+			this.vel.x = 0;
+			this.currentAnim = this.anims.quickAttack;
+			this.currentAnim.rewind();
+			this.attackTimer = new ig.Timer();
+			
 		}
 		
 		// set the current animation, based on the player's speed
-		if( this.vel.y < 0 ) {
-			this.currentAnim = this.anims.jump;
+		if(!this.attacking){
+			if( this.vel.y < 0 ) {
+				this.currentAnim = this.anims.jump;
+			}
+			else if( this.vel.y > 0 ) {
+				this.currentAnim = this.anims.fall;
+			}
+			else if( this.vel.x != 0 && this.crouching) {
+				this.currentAnim = this.anims.crouchwalk;
+			}
+			else if( this.vel.x != 0 && !this.crouching) {
+				this.currentAnim = this.anims.run;
+			}
+			else {
+				if(!this.crouching){
+					this.currentAnim = this.anims.idle;
+				} else {
+					this.currentAnim = this.anims.crouchidle;
+				}
+			}
 		}
-		else if( this.vel.y > 0 ) {
-			this.currentAnim = this.anims.fall;
-		}
-		else if( this.vel.x != 0 ) {
-			this.currentAnim = this.anims.run;
-		}
-		else {
-			this.currentAnim = this.anims.idle;
+		
+		if(this.attacking){
+			if(this.attackTimer.delta() > .45){
+				this.attackTimer = null;
+				this.attacking = false;
+						
+			}
 		}
 		/*
 		if ( this.vel.y < 0 && this.isClimbing && this.momentumDirection.y == -1){
@@ -152,60 +189,15 @@ EntityPlayer = ig.Entity.extend({
 		if (other.collides == ig.Entity.COLLIDES.FIXED){
     		 //this.flip = !this.flip;this.currentAnim.flip.x = this.flip;
   		}
+  		
+  		if(this.attacking){
+  			//console.log(other);
+  			other.kill();
+  		}
 	}
 });
 
 
-// The grenades a player can throw are NOT in a separate file, because
-// we don't need to be able to place them in Weltmeister. They are just used
-// here in the code.
 
-// Only entities that should be usable in Weltmeister need to be in their own
-// file.
-EntitySlimeGrenade = ig.Entity.extend({
-	size: {x: 4, y: 4},
-	offset: {x: 2, y: 2},
-	maxVel: {x: 100, y: 200},
-	
-	
-	// The fraction of force with which this entity bounces back in collisions
-	bounciness: 0.6, 
-	
-	type: ig.Entity.TYPE.NONE,
-	checkAgainst: ig.Entity.TYPE.B, // Check Against B - our evil enemy group
-	collides: ig.Entity.COLLIDES.PASSIVE,
-		
-	animSheet: new ig.AnimationSheet( 'media/slime-grenade.png', 8, 8 ),
-	
-	bounceCounter: 0,
-	
-	
-	init: function( x, y, settings ) {
-		this.parent( x, y, settings );
-		
-		this.vel.x = (settings.flip ? -this.maxVel.x : this.maxVel.x);
-		this.vel.y = -50;
-		this.addAnim( 'idle', 0.2, [0,1] );
-	},
-		
-	handleMovementTrace: function( res ) {
-		this.parent( res );
-		if( res.collision.x || res.collision.y ) {
-			
-			// only bounce 3 times
-			this.bounceCounter++;
-			if( this.bounceCounter > 3 ) {
-				this.kill();
-			}
-		}
-	},
-	
-	// This function is called when this entity overlaps anonther entity of the
-	// checkAgainst group. I.e. for this entity, all entities in the B group.
-	check: function( other ) {
-		other.receiveDamage( 10, this );
-		this.kill();
-	}	
-});
 
 });
