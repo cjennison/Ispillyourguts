@@ -21,7 +21,7 @@ ig.module(
 HospitalLevel = ig.Game.extend({
 	
 	// Load a font
-	font: new ig.Font( 'media/04b03.font.png' ),
+	font: new ig.Font( 'media/font/04b03.font.png' ),
     gravity: 100,
     fallHeight: 600,
                         

@@ -9,7 +9,7 @@ ig.module(
 EntityAlarm = ig.Entity.extend({
 	size: {x: 8, y: 10},
 	isAlarm:true,
-	animSheet: new ig.AnimationSheet( 'media/alarms.png', 8, 10 ),
+	animSheet: new ig.AnimationSheet( 'media/objects/alarms.png', 8, 10 ),
 		type: ig.Entity.TYPE.A,
 
 	

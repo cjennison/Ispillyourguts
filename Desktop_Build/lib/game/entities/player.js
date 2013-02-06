@@ -12,7 +12,7 @@ EntityPlayer = ig.Entity.extend({
 	// The players (collision) size is a bit smaller than the animation
 	// frames, so we have to move the collision box a bit (offset)
 	size: {x: 20, y:45},
-	offset: {x: 20, y: 2},
+	offset: {x: 20, y: 8},
 	
 	maxVel: {x: 100, y: 200},
 	friction: {x: 600, y: 0},
@@ -56,6 +56,8 @@ EntityPlayer = ig.Entity.extend({
 		this.addAnim('crouchidle', 1, [13]);
 		this.addAnim('crouchwalk', 0.1, [13,14,15]);
 		this.addAnim('quickAttack', 0.1, [20,21,22,23,24], false);
+		this.addAnim('execution', 0.3, [31,32,33,34,35], false);
+
 		
 		//if (!ig.global.wm)ig.game.sortEntitiesDeferred();
 		
@@ -168,7 +170,7 @@ EntityPlayer = ig.Entity.extend({
 	
 	
 	execute:function(){
-		
+		this.currentAnim = this.anims.execution;
 	},
 	
 	moveDesktop:function(){
@@ -278,13 +280,17 @@ EntityPlayer = ig.Entity.extend({
   		
   		if(ig.input.pressed('execute') && other.name == "enemy"){
   			this.executing = true;
-  			setTimeout(function(){
-  				
-  				this.executing = false;
-  				other.kill();
-  				console.log(this.executing);
-  			},1000);
-  		}
+  			this.resetExecution(other);
+  		} 
+	},
+	
+	resetExecution:function(other){
+		setTimeout(function(){
+			ig.game.getEntitiesByType(EntityPlayer)[0].executing = false;
+	  		other.kill();
+	  		console.log(this);
+		}, 1000)
+		
 	}
 });
 
