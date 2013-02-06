@@ -40,10 +40,7 @@ HospitalLevel = ig.Game.extend({
 	init: function() {
 	
 	
-		ig.music.add('media/sounds/theme.*');
-		ig.music.loop = true;
-		ig.music.volume = .5;
-		ig.music.play();
+		ig.music.next();
 	
 		// Initialize your game here; bind keys etc.
          ig.input.bind(ig.KEY.LEFT_ARROW, 'left');
@@ -51,6 +48,7 @@ HospitalLevel = ig.Game.extend({
          ig.input.bind(ig.KEY.UP_ARROW, 'up');
          ig.input.bind(ig.KEY.DOWN_ARROW, 'down');
 
+         ig.input.bind(ig.KEY.CTRL, 'crouch');
          ig.input.bind(ig.KEY.SPACE, 'jump');
          ig.input.bind(ig.KEY.Z, 'quickAttack');
                         
@@ -139,7 +137,9 @@ HospitalLevel = ig.Game.extend({
              this.buttons[i].draw();
         }
         
-        this.stickLeft.draw();
+        if(ig.ua.mobile){
+        	this.stickLeft.draw();
+        }
 
 		// Add your own drawing code here
 		var x = ig.system.width/2,

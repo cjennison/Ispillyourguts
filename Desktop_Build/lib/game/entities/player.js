@@ -187,6 +187,11 @@ EntityPlayer = ig.Entity.extend({
             }
         }       
 		
+		if(ig.input.state("crouch")){
+			this.crouching = true;
+		} else {
+			this.crouching = false;
+		}
 		
 	},
 	

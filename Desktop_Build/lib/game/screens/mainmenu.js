@@ -23,6 +23,15 @@ MainMenu = ig.Game.extend({
 	init: function() {
 		
 		// Initialize your game here; bind keys etc.
+		ig.music.add('media/music/MenuMusic.*', "mainmenu");
+		ig.music.add('media/music/theme.*', "hospital");
+		ig.music.loop = true;
+		ig.music.volume = .1;
+		ig.music.play();
+		
+		
+		console.log(ig.music.tracks)
+		
 		
         ig.input.bind(ig.KEY.ENTER, 'start');
         
@@ -33,10 +42,7 @@ MainMenu = ig.Game.extend({
              this.buttons = [
                  new ig.TouchButton('start', x, y, 150, 75, this.buttonImage, 0),
              ];
-         } else {
-         	//if(ig.input.pressed('start'))
-         }
-        
+         } 
 	},
 	
 	update: function() {
