@@ -97,8 +97,8 @@ HospitalLevel = ig.Game.extend({
                         
          this.loadLevel(LevelHospital);
          //this.spawnEntity(EntityPlayer, 32, 480);
-         this.spawnEntity(EntityStealthObject, 400, 400);
-         this.spawnEntity(EntityHospitalBed, 20, 480);
+         this.spawnEntity(EntityStealthobject, 400, 400);
+         this.spawnEntity(EntityHospitalbed, 20, 480);
          this.spawnEntity(EntityBoxes, 400, 580);
 
          var nurse = this.spawnEntity(EntityEnemy, 400, 460);

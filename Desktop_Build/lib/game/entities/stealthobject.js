@@ -5,7 +5,7 @@ ig.module(
     'impact.entity'
     )
 .defines(function(){
-    EntityStealthObject = ig.Entity.extend({
+    EntityStealthobject = ig.Entity.extend({
         name: "stealthObject",
       type: ig.Entity.TYPE.B, // Be careful cause you could "kill" the door
       checkAgainst: ig.Entity.TYPE.A, // your player is TYPE.A

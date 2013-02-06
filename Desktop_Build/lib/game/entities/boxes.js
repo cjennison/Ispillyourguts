@@ -5,7 +5,7 @@ ig.module(
     'impact.entity'
     )
 .defines(function(){
-    EntityBoxes = EntityStealthObject.extend({
+    EntityBoxes = EntityStealthobject.extend({
        
         
         size:{x:89,y:57},    

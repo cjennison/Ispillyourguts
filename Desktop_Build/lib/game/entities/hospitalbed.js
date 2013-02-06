@@ -5,7 +5,7 @@ ig.module(
     'impact.entity'
     )
 .defines(function(){
-    EntityHospitalBed = EntityStealthObject.extend({
+    EntityHospitalbed = EntityStealthobject.extend({
        
         
         size:{x:89,y:57},    
