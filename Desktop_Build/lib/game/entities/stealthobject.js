@@ -1,11 +1,11 @@
 ig.module(
-    'game.entities.plant'
+    'game.entities.stealthobject'
     )
 .requires(
     'impact.entity'
     )
 .defines(function(){
-    EntityPlant = ig.Entity.extend({
+    EntityStealthObject = ig.Entity.extend({
         name: "stealthObject",
       type: ig.Entity.TYPE.B, // Be careful cause you could "kill" the door
       checkAgainst: ig.Entity.TYPE.A, // your player is TYPE.A
@@ -17,13 +17,13 @@ ig.module(
     
         init: function( x, y, settings ) {
             this.parent(x,y,settings );
-            this.addAnim( 'closed', 1, [0] );
-            this.addAnim('open', 1, [1] );
+            this.addAnim( 'idle', 1, [0] );
         },
     
         update: function() {
-            this.currentAnim = this.anims.closed;
+            this.currentAnim = this.anims.idle;
             var player = ig.game.getEntitiesByType(EntityPlayer)[0];
+            if(!player){return;}
             player.currentAnim.alpha = 1;
             
             if( player && this.distanceTo( player ) > this.size.x ) {

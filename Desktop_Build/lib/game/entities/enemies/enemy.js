@@ -145,29 +145,15 @@ EntityEnemy = ig.Entity.extend({
 		if(player.hiding == true){ return }
 		if(this.flip){
 		// <-
-			
-			if((player.pos.x > (this.pos.x - this.awareness)) && player.pos.x < this.pos.x){
-				//FULL
-				sightType = "full";
+						
+			if(this.distanceTo(player) < 100 && player.pos.x < this.pos.x){
 				this.alerted = true;
-			} else if ((player.pos.x > (this.pos.x - (this.awareness*2))) && player.pos.x < this.pos.x){
-				//HALF
-				sightType = "half";
-			} else {
-				//NONE
-				sightType = "none";
 			}
+			
 		} else {
 		// ->
-			if((player.pos.x < (this.pos.x + this.awareness + this.size.x)) && player.pos.x > (this.pos.x)){
-				sightType = "full";
+			if(this.distanceTo(player) < 100 && player.pos.x > this.pos.x){
 				this.alerted = true;
-			} else if ((player.pos.x < (this.pos.x + (this.awareness*2) + this.size.x)) && player.pos.x > (this.pos.x)){
-				//HALF
-				sightType = "half";
-			} else {
-				//NONE
-				sightType = "none";
 			}
 		}
 		

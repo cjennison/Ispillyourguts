@@ -190,6 +190,7 @@ EntityPlayer = ig.Entity.extend({
 	
 	execute:function(){
 		this.currentAnim = this.anims.execution;
+		
 	},
 	
 	moveDesktop:function(){
@@ -310,6 +311,7 @@ EntityPlayer = ig.Entity.extend({
 		setTimeout(function(){
 			ig.game.getEntitiesByType(EntityPlayer)[0].executing = false;
 	  		other.kill();
+	  		ig.game.enrage();
 	  		console.log(this);
 		}, 1000)
 		

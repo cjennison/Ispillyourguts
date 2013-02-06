@@ -16,7 +16,10 @@ ig.module(
     'game.entities.ladder',
     'game.entities.door',
     'game.entities.alarm',
-    'game.entities.plant',
+    'game.entities.stealthobject',
+    'game.entities.hospitalbed',
+    'game.entities.boxes',
+
     'game.levels.Hospital'
 )
 .defines(function(){
@@ -37,7 +40,9 @@ HospitalLevel = ig.Game.extend({
     gameEndTimer: null,
     gameOver: false,
     
-    
+    enraged:false,
+    enragedTimer:null,
+    rageOverlay: new ig.Image('media/ui/rageoverlay.png'),
 
 	
 	init: function() {
@@ -92,7 +97,10 @@ HospitalLevel = ig.Game.extend({
                         
          this.loadLevel(LevelHospital);
          //this.spawnEntity(EntityPlayer, 32, 480);
-         this.spawnEntity(EntityPlant, 400, 400);
+         this.spawnEntity(EntityStealthObject, 400, 400);
+         this.spawnEntity(EntityHospitalBed, 20, 480);
+         this.spawnEntity(EntityBoxes, 400, 580);
+
          var nurse = this.spawnEntity(EntityEnemy, 400, 460);
          
          var alarm = this.getEntitiesByType(EntityAlarm)[0];
@@ -113,7 +121,13 @@ HospitalLevel = ig.Game.extend({
         		ig.system.setGame(MainMenu);
         	}
         }
-        
+        if(this.enraged){
+        	if(this.enrageTimer.delta() > 5){
+        		this.enraged = false;
+        		this.enrageTime = null;
+        	}
+        }
+         
 		
 		// Add your own, additional update code here
 	},
@@ -125,6 +139,11 @@ HospitalLevel = ig.Game.extend({
               this.backgroundMaps[i].chunkSize = 1024;
               this.backgroundMaps[i].preRender = true;
            }
+    },
+    
+    enrage: function(){
+    	this.enrageTimer = new ig.Timer();
+    	this.enraged = true;
     },
     
     endGame: function(){
@@ -144,6 +163,10 @@ HospitalLevel = ig.Game.extend({
         
         if(ig.ua.mobile){
         	this.stickLeft.draw();
+        }
+        
+       if(this.enraged){
+        	this.rageOverlay.draw(0,0);
         }
 
 		// Add your own drawing code here
