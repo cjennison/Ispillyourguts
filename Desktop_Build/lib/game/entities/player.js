@@ -40,8 +40,8 @@ EntityPlayer = ig.Entity.extend({
     ladderReleaseTimer: new ig.Timer(0.0),
     ladderSpeed: 75,
     
-    //lightAttackSound: new ig.Sound("media/effects/Light atk 1.caf"),
-    //footStepsSound: new ig.Sound("media/effects/Footsteps.caf"),
+    lightAttackSound: new ig.Sound("media/effects/Light atk 1.*"),
+    footStepsSound: new ig.Sound("media/effects/Footsteps.*"),
 
     
     attackTimer:null,
@@ -112,6 +112,7 @@ EntityPlayer = ig.Entity.extend({
 		if( ig.input.pressed('quickAttack') ) {
 			this.attacking = true;
 			this.vel.x = 0;
+			this.lightAttackSound.play();
 			this.currentAnim = this.anims.quickAttack;
 			this.currentAnim.rewind();
 			this.attackTimer = new ig.Timer();
@@ -148,6 +149,7 @@ EntityPlayer = ig.Entity.extend({
 			}
 			else if( this.vel.x != 0 && !this.crouching) {
 				this.currentAnim = this.anims.run;
+				//this.footStepsSound.play();
 			}
 			else {
 				if(!this.crouching){

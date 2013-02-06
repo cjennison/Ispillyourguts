@@ -34,6 +34,9 @@ EntityEnemy = ig.Entity.extend({
 	
 	animSheet: new ig.AnimationSheet( 'media/enemyNurse_one.png', 32, 48  ),
 	
+	hitSound: new ig.Sound("media/effects/Enemy Hit Gore.*"),
+
+	
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
 		
@@ -181,7 +184,7 @@ EntityEnemy = ig.Entity.extend({
 	
 	kill:function(){
 		
-		
+		this.hitSound.play();
 		ig.game.spawnEntity(EntityDeathExplosion, this.pos.x, this.pos.y);
 
 		
