@@ -29,6 +29,7 @@ ig.AnalogStick = ig.Class.extend({
 		this.stickSize = stickSize || this.stickSize;
 		this.max = this.baseSize - this.stickSize/3;
 		
+		
 		document.addEventListener( 'touchstart', this.touchStart.bind(this), false );
 		document.addEventListener( 'touchmove', this.touchMove.bind(this), false );
 		document.addEventListener( 'touchend', this.touchEnd.bind(this), false );

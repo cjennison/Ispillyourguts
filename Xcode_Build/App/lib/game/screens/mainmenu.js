@@ -33,7 +33,10 @@ MainMenu = ig.Game.extend({
              this.buttons = [
                  new ig.TouchButton('start', x, y, 150, 75, this.buttonImage, 0),
              ];
+         } else {
+         	//if(ig.input.pressed('start'))
          }
+        
 	},
 	
 	update: function() {
@@ -51,7 +54,7 @@ MainMenu = ig.Game.extend({
 	
 	draw: function() {
 		// Draw all entities and backgroundMaps
-        //this.font.draw( 'It Works!', x, y, ig.Font.ALIGN.CENTER );
+		
 		this.parent();
         
 		this.bgImage.draw(ig.system.width - this.bgImage.width, 0);
@@ -64,8 +67,10 @@ MainMenu = ig.Game.extend({
        
 		// Add your own drawing code here
 		var x = ig.system.width/2,
-			y = ig.system.height/2;
-		
+			y = ig.system.height/2 + 90;
+		 if(!ig.ua.mobile){
+        	this.font.draw( 'PRESS ENTER', x, y, ig.Font.ALIGN.CENTER );
+        }
 	}
 });
 

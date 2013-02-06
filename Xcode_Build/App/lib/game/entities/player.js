@@ -69,41 +69,22 @@ EntityPlayer = ig.Entity.extend({
 
 		}
 		
+		if(ig.ua.mobile){
+			this.moveMobile();
+		} else {
+			this.moveDesktop();
+		}
 		
+		// attack
+		if( ig.input.pressed('quickAttack') ) {
+			this.attacking = true;
+			this.vel.x = 0;
+			this.currentAnim = this.anims.quickAttack;
+			this.currentAnim.rewind();
+			this.attackTimer = new ig.Timer();
+			
+		}
 		
-		this.vel.x = ig.game.stickLeft.input.x * this.accelGround;
-        //this.vel.y = ig.game.stickLeft.input.y * this.accelGround;
-		
-		if(this.vel.x < 0){
-        	this.flip = true;
-        	this.direction = "left";
-        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
-
-        }
-        if(this.vel.x > 0){
-        	this.flip = false;
-        	this.direction = "right";
-        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
-
-        }
-		
-        
-       if( this.canClimb && ig.game.stickLeft.input.y != 0 ) {           
-            
-            this.isClimbing=true;
-            console.log("CLIMBING");
-            
-            //this.vel.x = 0; // don't fall off sides of ladder unintentionally
-            
-            //momentumDirection allows for up, down and idle movement (-1, 0 & 1) so you can stop on ladders
-            if (ig.game.stickLeft.input.y < .5) {
-                this.vel.y = -this.ladderSpeed;
-
-            }else if( ig.game.stickLeft.input.y > .5){
-				this.vel.y = this.ladderSpeed;
-            }
-        }                
-                                
 		// jump
 		if( (this.standing || this.isClimbing || this.canClimb) && (ig.input.pressed('jump') ) ) {
 			this.vel.y = -this.jump;
@@ -120,24 +101,6 @@ EntityPlayer = ig.Entity.extend({
         // prevent fall down ladder if ground touched but ladderReleaseTimer still running from recent jump
         if (this.standing)this.ladderReleaseTimer.set(0.0);
         
-		
-		// attack
-		if( ig.input.pressed('quickAttack') ) {
-			this.attacking = true;
-			this.vel.x = 0;
-			this.currentAnim = this.anims.quickAttack;
-			this.currentAnim.rewind();
-			this.attackTimer = new ig.Timer();
-			
-		}
-		//console.log(ig.game.stickLeft.input.y);
-		if(ig.game.stickLeft.input.y > .55){
-			this.crouching = true;
-			//this.size.y /= 2;
-		} else {
-			this.crouching = false;
-			//this.size.y = 45;
-		}
 		
 		// set the current animation, based on the player's speed
 		if(!this.attacking){
@@ -189,6 +152,89 @@ EntityPlayer = ig.Entity.extend({
 		this.canClimb = false;
 		// move!
 		this.parent();
+	},
+	
+	
+	moveDesktop:function(){
+		if(ig.input.state('right')){
+			this.vel.x = this.accelGround;
+			this.flip = false;
+        	this.direction = "right";
+        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
+		}
+		
+		if(ig.input.state('left')){
+			this.vel.x = -this.accelGround;
+			this.flip = true;
+        	this.direction = "left";
+        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
+		}
+		
+		if( this.canClimb ) {           
+            if(ig.input.state("up") || ig.input.state("down")){
+	            this.isClimbing=true;
+	            console.log("CLIMBING");
+	            
+	            //this.vel.x = 0; // don't fall off sides of ladder unintentionally
+	            
+	            //momentumDirection allows for up, down and idle movement (-1, 0 & 1) so you can stop on ladders
+	            if (ig.input.state("up")) {
+	                this.vel.y = -this.ladderSpeed;
+	
+	            }else if( ig.input.state("down")){
+					this.vel.y = this.ladderSpeed;
+	            }
+            }
+        }       
+		
+		
+	},
+	
+	moveMobile:function(){
+		this.vel.x = ig.game.stickLeft.input.x * this.accelGround;
+        //this.vel.y = ig.game.stickLeft.input.y * this.accelGround;
+		
+		if(this.vel.x < 0){
+        	this.flip = true;
+        	this.direction = "left";
+        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
+
+        }
+        if(this.vel.x > 0){
+        	this.flip = false;
+        	this.direction = "right";
+        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
+
+        }
+		
+        
+       if( this.canClimb && ig.game.stickLeft.input.y != 0 ) {           
+            
+            this.isClimbing=true;
+            console.log("CLIMBING");
+            
+            //this.vel.x = 0; // don't fall off sides of ladder unintentionally
+            
+            //momentumDirection allows for up, down and idle movement (-1, 0 & 1) so you can stop on ladders
+            if (ig.game.stickLeft.input.y < .5) {
+                this.vel.y = -this.ladderSpeed;
+
+            }else if( ig.game.stickLeft.input.y > .5){
+				this.vel.y = this.ladderSpeed;
+            }
+        }                
+                                
+		
+		
+		
+		//console.log(ig.game.stickLeft.input.y);
+		if(ig.game.stickLeft.input.y > .55){
+			this.crouching = true;
+			//this.size.y /= 2;
+		} else {
+			this.crouching = false;
+			//this.size.y = 45;
+		}
 	},
 	
 	check: function( other ) {

@@ -48,6 +48,11 @@ HospitalLevel = ig.Game.extend({
 		// Initialize your game here; bind keys etc.
          ig.input.bind(ig.KEY.LEFT_ARROW, 'left');
          ig.input.bind(ig.KEY.RIGHT_ARROW, 'right');
+         ig.input.bind(ig.KEY.UP_ARROW, 'up');
+         ig.input.bind(ig.KEY.DOWN_ARROW, 'down');
+
+         ig.input.bind(ig.KEY.SPACE, 'jump');
+         ig.input.bind(ig.KEY.Z, 'quickAttack');
                         
          if(ig.ua.mobile){
              var yPos = ig.system.height - 48;
