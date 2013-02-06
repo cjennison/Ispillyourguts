@@ -21,7 +21,7 @@ EntityPlayer = ig.Entity.extend({
 	checkAgainst: ig.Entity.TYPE.B,
 	collides: ig.Entity.COLLIDES.PASSIVE,
 	
-	animSheet: new ig.AnimationSheet( 'media/characters/characterDennis.png', 60, 47 ),
+	animSheet: new ig.AnimationSheet( 'media/characters/characterDennis.png', 60, 60 ),
 	
 	// These are our own properties. They are not defined in the base
 	// ig.Entity class. We just use them internally for the Player
