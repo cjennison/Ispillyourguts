@@ -8,9 +8,11 @@ ig.module(
     'plugins.touch-button',
     'plugins.analog-stick',
     'game.screens.mainmenu',
+    'game.screens.introduction',
     'game.entities.enemies.enemy',
     'game.entities.player',
     'game.entities.ui.detectioneye',
+    'game.entities.ui.blackoverlay',
     'game.entities.ladder',
     'game.entities.door',
     'game.entities.alarm',
@@ -166,6 +168,6 @@ HospitalLevel = ig.Game.extend({
          
          ig.System.drawMode = ig.System.DRAW.SUBPIXEL;
          ig.Sound.use = [ig.Sound.FORMAT.CAF, ig.Sound.FORMAT.OGG, ig.Sound.FORMAT.MP3];
-ig.main( '#canvas', MainMenu, 60, width, height, 1 );
+		ig.main( '#canvas', Introduction, 60, width, height, 1 );
 
 });
