@@ -11,6 +11,7 @@ ig.module(
       checkAgainst: ig.Entity.TYPE.A, // your player is TYPE.A
       collides: ig.Entity.COLLIDES.PASSIVE,
         
+        beingUsed:false,
         size:{x:33,y:68},    
         animSheet: new ig.AnimationSheet('media/objects/tree.png',33,70),
     
@@ -22,19 +23,24 @@ ig.module(
     
         update: function() {
             this.currentAnim = this.anims.closed;
+            var player = ig.game.getEntitiesByType(EntityPlayer)[0];
+            player.currentAnim.alpha = 1;
             
-            ig.game.getEntitiesByType(EntityPlayer)[0].currentAnim.alpha = 1;
-            
+            if( player && this.distanceTo( player ) > this.size.x ) {
+				player.hiding = false;
+			}
             
             this.parent();
         },
         
         check:function(other){
+        	
         	if(ig.input.state("crouch")){
         		other.currentAnim.alpha = .3;
         		other.hiding = true;
         	} else {
-        		ig.game.getEntitiesByType(EntityPlayer)[0].hiding = false;
+        		other.hiding = false;
+        		other.currentAnim.alpha = 1;
         	}
         	
         }
