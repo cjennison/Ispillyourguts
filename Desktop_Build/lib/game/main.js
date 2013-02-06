@@ -51,6 +51,7 @@ HospitalLevel = ig.Game.extend({
          ig.input.bind(ig.KEY.CTRL, 'crouch');
          ig.input.bind(ig.KEY.SPACE, 'jump');
          ig.input.bind(ig.KEY.Z, 'quickAttack');
+         ig.input.bind(ig.KEY.X, 'execute');
                         
          if(ig.ua.mobile){
              var yPos = ig.system.height - 48;
@@ -162,7 +163,7 @@ HospitalLevel = ig.Game.extend({
          var width = window.innerWidth / scale;
          
          ig.System.drawMode = ig.System.DRAW.SUBPIXEL;
-         
+         ig.Sound.use = [ig.Sound.FORMAT.CAF, ig.Sound.FORMAT.OGG, ig.Sound.FORMAT.MP3];
 ig.main( '#canvas', MainMenu, 60, width, height, 1 );
 
 });

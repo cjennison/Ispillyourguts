@@ -11,6 +11,8 @@ EntityEnemy = ig.Entity.extend({
 	maxVel: {x: 100, y: 100},
 	friction: {x: 150, y: 0},
 	
+	name:"enemy",
+	
 	type: ig.Entity.TYPE.B, // Evil enemy group
 	checkAgainst: ig.Entity.TYPE.A, // Check against friendly
 	collides: ig.Entity.COLLIDES.PASSIVE,

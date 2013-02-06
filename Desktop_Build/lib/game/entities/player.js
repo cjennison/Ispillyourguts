@@ -2,7 +2,8 @@ ig.module(
 	'game.entities.player'
 )
 .requires(
-	'impact.entity'
+	'impact.entity',
+	'impact.sound'
 )
 .defines(function(){
 
@@ -31,17 +32,21 @@ EntityPlayer = ig.Entity.extend({
 	health: 10,
 	canClimb: false,
     isClimbing: false,
-    attacking: false,
-    crouching: false,
+    attacking: false, //Are we attacking?
+    crouching: false, //Are we crouching?
+    executing: false, //Are we executing someone?
     momentumDirection: {'x':0,'y':0},
     ladderReleaseTimer: new ig.Timer(0.0),
     ladderSpeed: 75,
+    
+    //lightAttackSound: new ig.Sound("media/effects/Light atk 1.caf"),
+    //footStepsSound: new ig.Sound("media/effects/Footsteps.caf"),
+
     
     attackTimer:null,
 	
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
-		
 		// Add the animations
 		this.addAnim( 'idle', 1, [0,1,2,1] );
 		this.addAnim( 'run', 0.1, [3,4,5,6,7,8] );
@@ -58,6 +63,13 @@ EntityPlayer = ig.Entity.extend({
 	
 	
 	update: function() {
+		
+		if(this.executing){
+			this.execute();
+			this.parent();
+			return;
+		}
+		
 		
 		// move left or right
 		var accel = this.standing ? this.accelGround : this.accelAir;
@@ -154,6 +166,10 @@ EntityPlayer = ig.Entity.extend({
 		this.parent();
 	},
 	
+	
+	execute:function(){
+		
+	},
 	
 	moveDesktop:function(){
 		if(ig.input.state('right')){
@@ -255,9 +271,19 @@ EntityPlayer = ig.Entity.extend({
     		 //this.flip = !this.flip;this.currentAnim.flip.x = this.flip;
   		}
   		
-  		if(this.attacking){
+  		if(this.attacking && other.name == "enemy"){
   			//console.log(other);
   			other.kill();
+  		}
+  		
+  		if(ig.input.pressed('execute') && other.name == "enemy"){
+  			this.executing = true;
+  			setTimeout(function(){
+  				
+  				this.executing = false;
+  				other.kill();
+  				console.log(this.executing);
+  			},1000);
   		}
 	}
 });
