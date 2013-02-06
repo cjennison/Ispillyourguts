@@ -57,7 +57,7 @@ EntityPlayer = ig.Entity.extend({
 		this.addAnim('crouchidle', 1, [13]);
 		this.addAnim('crouchwalk', 0.1, [13,14,15]);
 		this.addAnim('quickAttack', 0.1, [20,21,22,23,24], false);
-		this.addAnim('execution', 0.3, [31,32,33,34,35], false);
+		this.addAnim('execution', 0.3, [31,32,33,34], false);
 
 		
 		//if (!ig.global.wm)ig.game.sortEntitiesDeferred();
@@ -79,10 +79,28 @@ EntityPlayer = ig.Entity.extend({
 		if(this.crouching){
 			this.maxVel.x = 50;
 			accel = accel/4;
+			
 		} else {
 			this.maxVel.x = 100;
-
+			
 		}
+		
+		if(ig.input.pressed("crouch")){
+			if(this.vel.y == 0){
+				this.size.y = 25;
+				this.offset.y = 28;
+				this.pos.y = this.pos.y += 20;
+			}
+		}
+		
+		if(ig.input.released("crouch")){
+			if(this.vel.y == 0 && this.crouching){
+				this.size.y = 45;
+				this.offset.y = 8;
+				this.pos.y = this.pos.y -= 20;
+			}
+		}
+		
 		
 		if(ig.ua.mobile){
 			this.moveMobile();
