@@ -4,7 +4,9 @@ ig.module(
 .requires(
 	'impact.game',
 	'impact.font',
+    'impact.sound',
     'plugins.touch-button',
+    'plugins.analog-stick',
     'game.screens.mainmenu',
     'game.entities.enemies.enemy',
     'game.entities.player',
@@ -26,29 +28,45 @@ HospitalLevel = ig.Game.extend({
     //Buttons
     buttons: [],
     buttonImage: new ig.Image('media/buttons.png'),
+
     
     //Timers
     gameEndTimer: null,
     gameOver: false,
+    
+    
+
 	
 	init: function() {
+	
+	
+		ig.music.add('media/sounds/theme.*');
+		ig.music.loop = true;
+		ig.music.volume = .5;
+		ig.music.play();
+	
 		// Initialize your game here; bind keys etc.
-                        
          ig.input.bind(ig.KEY.LEFT_ARROW, 'left');
          ig.input.bind(ig.KEY.RIGHT_ARROW, 'right');
                         
          if(ig.ua.mobile){
              var yPos = ig.system.height - 48;
              this.buttons = [
-                 new ig.TouchButton('left', 0, yPos, 40, 48, this.buttonImage, 0),
-                 new ig.TouchButton('right', 40, yPos, 40, 48, this.buttonImage, 1),
-                 new ig.TouchButton('up', 80, yPos, 40, 48, this.buttonImage, 3),
+                 //new ig.TouchButton('left', 0, yPos, 40, 48, this.buttonImage, 0),
+                // new ig.TouchButton('right', 40, yPos, 40, 48, this.buttonImage, 1),
+                // new ig.TouchButton('up', 80, yPos, 40, 48, this.buttonImage, 3),
                  new ig.TouchButton('quickAttack', ig.system.width - 40, yPos, 40, 48, this.buttonImage, 2),
                  new ig.TouchButton('jump', ig.system.width - 80, yPos, 40, 48, this.buttonImage, 3)
              ];
          }
                                
-                               
+         var baseSize = 50;
+   	     var stickSize = 20;
+         var margin = 10;
+         var y = ig.system.height - baseSize - margin;
+         var x1 = baseSize + margin;
+
+         this.stickLeft = new ig.AnalogStick( x1, y, baseSize, stickSize );                      
         
                                /*
         //Smooth Scrolling                
@@ -115,7 +133,9 @@ HospitalLevel = ig.Game.extend({
         for(var i = 0; i < this.buttons.length; i++){
              this.buttons[i].draw();
         }
-		
+        
+        this.stickLeft.draw();
+
 		// Add your own drawing code here
 		var x = ig.system.width/2,
 			y = ig.system.height/2;
@@ -132,7 +152,7 @@ HospitalLevel = ig.Game.extend({
 // Start the Game with 60fps, a resolution of 320x240, scaled
 // up by a factor of 2
          
-         var height = 190;
+         var height = 240;
          var scale = window.innerHeight / height;
          var width = window.innerWidth / scale;
          

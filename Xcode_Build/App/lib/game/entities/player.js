@@ -11,7 +11,7 @@ EntityPlayer = ig.Entity.extend({
 	// The players (collision) size is a bit smaller than the animation
 	// frames, so we have to move the collision box a bit (offset)
 	size: {x: 20, y:45},
-	offset: {x: 0, y: 2},
+	offset: {x: 20, y: 2},
 	
 	maxVel: {x: 100, y: 200},
 	friction: {x: 600, y: 0},
@@ -22,11 +22,10 @@ EntityPlayer = ig.Entity.extend({
 	
 	animSheet: new ig.AnimationSheet( 'media/characters/characterDennis.png', 60, 47 ),
 	
-	
 	// These are our own properties. They are not defined in the base
 	// ig.Entity class. We just use them internally for the Player
 	flip: true,
-	accelGround: 400,
+	accelGround: 100,
 	accelAir: 200,
 	jump: 70,
 	health: 10,
@@ -69,41 +68,40 @@ EntityPlayer = ig.Entity.extend({
 			this.maxVel.x = 100;
 
 		}
-		if( ig.input.state('left') ) {
-			this.accel.x = -accel;
-			this.flip = true;
-            if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
-		}
-		else if( ig.input.state('right') ) {
-			this.accel.x = accel;
-			this.flip = false;
-            if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
-		}
-		else {
-			this.accel.x = 0;
-		}         
+		
+		
+		
+		this.vel.x = ig.game.stickLeft.input.x * this.accelGround;
+        //this.vel.y = ig.game.stickLeft.input.y * this.accelGround;
+		
+		if(this.vel.x < 0){
+        	this.flip = true;
+        	this.direction = "left";
+        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
+
+        }
+        if(this.vel.x > 0){
+        	this.flip = false;
+        	this.direction = "right";
+        	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
+
+        }
+		
         
-                
-           
-        
-        if( this.canClimb && (ig.input.state('up') /*||  ig.input.pressed('down')*/) ) {           
+       if( this.canClimb && ig.game.stickLeft.input.y != 0 ) {           
             
             this.isClimbing=true;
-            this.ladderReleaseTimer.set(0.0); // allow to cling to ladder instead of jumping past, if up or down pressed
+            console.log("CLIMBING");
             
-            this.vel.x = 0; // don't fall off sides of ladder unintentionally
+            //this.vel.x = 0; // don't fall off sides of ladder unintentionally
             
             //momentumDirection allows for up, down and idle movement (-1, 0 & 1) so you can stop on ladders
-            if (ig.input.state('up')) {
-                this.momentumDirection.y >-1 ? this.momentumDirection.y -- : this.momentumDirection.y = -1;
-                
-            }else if( ig.input.state('down' )){
-                this.momentumDirection.y <1 ? this.momentumDirection.y ++ : this.momentumDirection.y = 1;
-            } else {
-            	this.momentumDirection.y = 0;
+            if (ig.game.stickLeft.input.y < .5) {
+                this.vel.y = -this.ladderSpeed;
+
+            }else if( ig.game.stickLeft.input.y > .5){
+				this.vel.y = this.ladderSpeed;
             }
-        } else {
-        	this.momentumDirection.y = 0;
         }                
                                 
 		// jump
@@ -131,6 +129,14 @@ EntityPlayer = ig.Entity.extend({
 			this.currentAnim.rewind();
 			this.attackTimer = new ig.Timer();
 			
+		}
+		//console.log(ig.game.stickLeft.input.y);
+		if(ig.game.stickLeft.input.y > .55){
+			this.crouching = true;
+			//this.size.y /= 2;
+		} else {
+			this.crouching = false;
+			//this.size.y = 45;
 		}
 		
 		// set the current animation, based on the player's speed
@@ -180,12 +186,20 @@ EntityPlayer = ig.Entity.extend({
              ig.game.endGame();
              this.kill();
         }
-		
+		this.canClimb = false;
 		// move!
 		this.parent();
 	},
 	
 	check: function( other ) {
+	
+		if(other.name == "ladder"){
+			this.canClimb = true;
+			return;
+		} else {
+			
+		}
+			
 		if (other.collides == ig.Entity.COLLIDES.FIXED){
     		 //this.flip = !this.flip;this.currentAnim.flip.x = this.flip;
   		}

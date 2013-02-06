@@ -131,6 +131,9 @@ EntityEnemy = ig.Entity.extend({
 		
 		if(!player) return;
 		
+		
+		if(player.pos.y > this.pos.y + 20 || player.pos.y < this.pos.y - 20){ return; };
+		
 		if(this.flip){
 		// <-
 			

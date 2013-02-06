@@ -3,6 +3,7 @@ ig.module(
 )
 .requires(
 	'impact.game',
+    'impact.sound',
 	'impact.font'
 )
 .defines(function(){
@@ -14,20 +15,23 @@ MainMenu = ig.Game.extend({
     
     //Buttons
     buttons: [],
-    buttonImage: new ig.Image('media/buttons.png'),                    
-    
+    buttonImage: new ig.Image('media/screens/mainmenu/playbtnsettwo_down.png'),                    
+    bgImage: new ig.Image('media/screens/mainmenu/bg.png'),
+    logoImage: new ig.Image('media/screens/mainmenu/logo.png'),
+	
 	
 	init: function() {
+		
 		// Initialize your game here; bind keys etc.
-        
+		
         ig.input.bind(ig.KEY.ENTER, 'start');
         
-        var x = ig.system.width/2,
+        var x = 55,
 			y = ig.system.height/2;
                         
          if(ig.ua.mobile){
              this.buttons = [
-                 new ig.TouchButton('start', x, y, 40, 48, this.buttonImage, 0),
+                 new ig.TouchButton('start', x, y, 150, 75, this.buttonImage, 0),
              ];
          }
 	},
@@ -49,17 +53,19 @@ MainMenu = ig.Game.extend({
 		// Draw all entities and backgroundMaps
         //this.font.draw( 'It Works!', x, y, ig.Font.ALIGN.CENTER );
 		this.parent();
-		
+        
+		this.bgImage.draw(ig.system.width - this.bgImage.width, 0);
+                          
+        this.logoImage.draw(ig.system.width/2 - this.logoImage.width/2 - 20, 0);
+
 		for(var i = 0; i < this.buttons.length; i++){
              this.buttons[i].draw();
         }
        
-		
 		// Add your own drawing code here
 		var x = ig.system.width/2,
 			y = ig.system.height/2;
 		
-		this.font.draw( 'It Works!', x, y, ig.Font.ALIGN.CENTER );
 	}
 });
 
