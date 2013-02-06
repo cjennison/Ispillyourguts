@@ -69,6 +69,7 @@ Introduction = ig.Game.extend({
 		
 		Aanim.alpha = this.Aalpha;
 		
+		var mid = ig.system.width/2;
 		
 		
 		if(this.AIn){
@@ -77,7 +78,7 @@ Introduction = ig.Game.extend({
 				this.AIn = false;
 				this.ADone = true;
 			}
-			Aanim.draw(0,0);
+			Aanim.draw(mid - 275,0);
 		}
 		
 		if(this.ADone){
@@ -86,7 +87,7 @@ Introduction = ig.Game.extend({
 				this.ADone = false;
 				this.RIn = true;
 			}
-			Aanim.draw(0,0);
+			Aanim.draw(mid - 275 ,0);
 		}
 		
 		if(this.RIn){
@@ -95,7 +96,7 @@ Introduction = ig.Game.extend({
 				this.RIn = false;
 				this.RDone = true;
 			}
-			Ranim.draw(0,0);
+			Ranim.draw(mid - 275 ,0);
 		}
 		
 		if(this.RDone){
@@ -104,7 +105,7 @@ Introduction = ig.Game.extend({
 				this.RDone = false;
 				ig.system.setGame(MainMenu);
 			}
-			Ranim.draw(0,0);
+			Ranim.draw(mid - 275 ,0);
 		}
 		
 

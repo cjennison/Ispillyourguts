@@ -189,6 +189,11 @@ HospitalLevel = ig.Game.extend({
          var scale = window.innerHeight / height;
          var width = window.innerWidth / scale;
          
+         if(!ig.ua.mobile){
+         	height = 240;
+         	width = 568;
+         }
+         
          ig.System.drawMode = ig.System.DRAW.SUBPIXEL;
          ig.Sound.use = [ig.Sound.FORMAT.CAF, ig.Sound.FORMAT.OGG, ig.Sound.FORMAT.MP3];
 		ig.main( '#canvas', Introduction, 60, width, height, 1 );
