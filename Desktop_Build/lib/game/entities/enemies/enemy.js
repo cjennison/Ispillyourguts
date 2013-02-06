@@ -51,7 +51,6 @@ EntityEnemy = ig.Entity.extend({
 	},
 	
 	update: function() {
-		
 		if(this.beingExecuted){
 			this.execute();
 			this.parent();
@@ -143,7 +142,8 @@ EntityEnemy = ig.Entity.extend({
 		
 		
 		if(player.pos.y > this.pos.y + 20 || player.pos.y < this.pos.y - 20){ return; };
-		
+		console.log(player.hiding);
+		if(player.hiding == true){ return }
 		if(this.flip){
 		// <-
 			

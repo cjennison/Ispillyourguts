@@ -8,7 +8,7 @@ ig.module(
 .defines(function(){
 
 EntityPlayer = ig.Entity.extend({
-	
+	name:"player",
 	// The players (collision) size is a bit smaller than the animation
 	// frames, so we have to move the collision box a bit (offset)
 	size: {x: 20, y:45},
@@ -32,6 +32,7 @@ EntityPlayer = ig.Entity.extend({
 	health: 10,
 	canClimb: false,
     isClimbing: false,
+    hiding: false, //Am I hiding?
     attacking: false, //Are we attacking?
     crouching: false, //Are we crouching?
     executing: false, //Are we executing someone?
@@ -65,7 +66,7 @@ EntityPlayer = ig.Entity.extend({
 	
 	
 	update: function() {
-		
+
 		if(this.executing){
 			this.execute();
 			this.parent();
@@ -277,6 +278,8 @@ EntityPlayer = ig.Entity.extend({
   			//console.log(other);
   			other.kill();
   		}
+  		
+  		
   		
   		if(ig.input.pressed('execute') && other.name == "enemy"){
   			this.executing = true;

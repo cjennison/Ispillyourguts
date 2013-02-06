@@ -14,6 +14,7 @@ ig.module(
     'game.entities.ladder',
     'game.entities.door',
     'game.entities.alarm',
+    'game.entities.plant',
     'game.levels.Hospital'
 )
 .defines(function(){
@@ -89,6 +90,7 @@ HospitalLevel = ig.Game.extend({
                         
          this.loadLevel(LevelHospital);
          //this.spawnEntity(EntityPlayer, 32, 480);
+         this.spawnEntity(EntityPlant, 400, 400);
          var nurse = this.spawnEntity(EntityEnemy, 400, 460);
          
          var alarm = this.getEntitiesByType(EntityAlarm)[0];
