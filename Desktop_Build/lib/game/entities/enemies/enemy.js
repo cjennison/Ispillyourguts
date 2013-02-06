@@ -19,6 +19,7 @@ EntityEnemy = ig.Entity.extend({
 	
 	health: 10,
 	
+	beingExecuted:false, //Am I being killed?
 	awareness: 20,
 	alerted:false,
 	foundAlarm:false,
@@ -26,6 +27,8 @@ EntityEnemy = ig.Entity.extend({
 	targetPosition: null,
 	
 	speed: 14,
+	panicDirection: 1,
+	panicSpeed: 50,
 	flip: false,
 	alarm: null,
 	
@@ -43,8 +46,18 @@ EntityEnemy = ig.Entity.extend({
 				
 	},
 	
+	execute: function(){
+		
+	},
 	
 	update: function() {
+		
+		if(this.beingExecuted){
+			this.execute();
+			this.parent();
+			return;
+		}
+		
 		// near an edge? return!
 		if( !ig.game.collisionMap.getTile(
 				this.pos.x + (this.flip ? +4 : this.size.x -4),
@@ -52,7 +65,7 @@ EntityEnemy = ig.Entity.extend({
 			)
 		) {
 			this.flip = !this.flip;
-					this.currentAnim.flip.x = this.flip;
+			this.currentAnim.flip.x = this.flip;
 
 		}
 		if(!this.alerted){
@@ -77,26 +90,21 @@ EntityEnemy = ig.Entity.extend({
 	},
 	
 	moveToPosition:function(){
-		var newpos = this.targetPosition;
-		if(newpos == null){
-			return;
-		}
 		
-		if(this.pos.x < newpos){
-        	this.pos.x++;
-        	this.flip = false;
-        }                       
-        else{
-        	this.pos.x--;
-        	this.flip = true;
-        }  
-        
-        if(this.randomMovementTimer.delta() > 1){
-        	this.randomMovementTimer.reset();
-        	this.targetPosition = this.pos.x + ((Math.random() * 200) - 100);
+		
+		
+		
+		this.vel.x = this.panicSpeed * this.panicDirection;
+		if(this.randomMovementTimer.delta() > Math.random()*10){
+			if(this.panicDirection == 1){
+				this.panicDirection = -1;
+			} else {
+				this.panicDirection = 1;
+			}
+						this.flip = !this.flip;
 
-        }
-		
+			this.randomMovementTimer.reset();
+		}
 	},
 	
 	
@@ -183,7 +191,6 @@ EntityEnemy = ig.Entity.extend({
 			other.setAlarm();
 			this.foundAlarm = true;
 			this.randomMovementTimer = new ig.Timer();
-			this.targetPosition = (Math.random() * 100) - 50;
 		}
 	},
 	
@@ -194,6 +201,10 @@ EntityEnemy = ig.Entity.extend({
 
 		
 		this.parent();
+	},
+	
+	setExecution:function(){
+		this.beingExecuted = true;
 	}
 });
 

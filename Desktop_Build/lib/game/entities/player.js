@@ -280,6 +280,7 @@ EntityPlayer = ig.Entity.extend({
   		
   		if(ig.input.pressed('execute') && other.name == "enemy"){
   			this.executing = true;
+  			other.setExecution();
   			this.resetExecution(other);
   		} 
 	},
