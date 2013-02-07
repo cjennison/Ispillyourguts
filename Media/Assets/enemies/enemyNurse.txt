@@ -1,1 +1,3 @@
-0,1,2,1
+running: 0,1,2,1
+scream: 0
+freak-out: 1,2,3,2
