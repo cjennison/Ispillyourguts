@@ -43,6 +43,7 @@ HospitalLevel = ig.Game.extend({
     enraged:false,
     enragedTimer:null,
     rageOverlay: new ig.Image('media/ui/rageoverlay.png'),
+    zoomed:false,
 
 	
 	init: function() {
@@ -93,8 +94,7 @@ HospitalLevel = ig.Game.extend({
              };
 	     }
                                 */
-                        
-                        
+                       
          this.loadLevel(LevelHospital);
          //this.spawnEntity(EntityPlayer, 32, 480);
          this.spawnEntity(EntityStealthobject, 400, 400);
@@ -111,15 +111,23 @@ HospitalLevel = ig.Game.extend({
          nurse2.setTargetAlarm(alarm2);
 	},
 	
+	zoomScreen:function(){
+		ig.system.context.scale(1.4,1.4);
+		this.zoomed = true;
+
+	},
+	
 	update: function() {
 		// Update all entities and backgroundMaps
 		this.parent();
         var player = this.getEntitiesByType(EntityPlayer)[0];
-        if(player){
+        if(player && !this.zoomed){
              this.screen.x = player.pos.x - ig.system.width/2;
              this.screen.y = player.pos.y - ig.system.height/2;
+        } else if(this.zoomed){
+        	this.screen.x = player.pos.x - ig.system.width/2 + 70;
+             this.screen.y = player.pos.y - ig.system.height/2 + 40;
         }
-        
         if(this.gameEndTimer){
         	if(this.gameEndTimer.delta() > 2){
         		ig.system.setGame(MainMenu);
