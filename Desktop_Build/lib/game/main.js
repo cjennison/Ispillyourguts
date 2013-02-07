@@ -100,11 +100,15 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntityStealthobject, 400, 400);
          this.spawnEntity(EntityHospitalbed, 20, 480);
          this.spawnEntity(EntityBoxes, 400, 580);
+         this.spawnEntity(EntityBoxes, 1280, 450);
 
          var nurse = this.spawnEntity(EntityEnemy, 400, 460);
+         var nurse2 = this.spawnEntity(EntityEnemy, 1280, 460);
          
          var alarm = this.getEntitiesByType(EntityAlarm)[0];
+         var alarm2 = this.getEntitiesByType(EntityAlarm)[1];
          nurse.setTargetAlarm(alarm);
+         nurse2.setTargetAlarm(alarm2);
 	},
 	
 	update: function() {
