@@ -297,6 +297,7 @@ EntityPlayer = ig.Entity.extend({
   		
   		if(ig.input.pressed('execute') && other.name == "enemy"){
   			this.executing = true;
+  			ig.game.zoomScreen();
   			other.setExecution();
   			this.currentAnim.rewind();
   			this.resetExecution(other);
@@ -308,6 +309,7 @@ EntityPlayer = ig.Entity.extend({
 			ig.game.getEntitiesByType(EntityPlayer)[0].executing = false;
 	  		other.kill();
 	  		ig.game.enrage();
+	  		ig.game.unZoom();
 	  		console.log(this);
 		}, 1000)
 		

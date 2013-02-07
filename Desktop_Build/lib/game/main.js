@@ -44,6 +44,9 @@ HospitalLevel = ig.Game.extend({
     enragedTimer:null,
     rageOverlay: new ig.Image('media/ui/rageoverlay.png'),
     zoomed:false,
+    scaleFactor: 0,
+    scaling: false,
+    unscaling:false,
 
 	
 	init: function() {
@@ -105,15 +108,22 @@ HospitalLevel = ig.Game.extend({
          var nurse = this.spawnEntity(EntityEnemy, 400, 460);
          var nurse2 = this.spawnEntity(EntityEnemy, 1280, 460);
          
-         var alarm = this.getEntitiesByType(EntityAlarm)[0];
-         var alarm2 = this.getEntitiesByType(EntityAlarm)[1];
+         var alarm = this.getEntitiesByType(EntityAlarm)[1];
+         var alarm2 = this.getEntitiesByType(EntityAlarm)[0];
          nurse.setTargetAlarm(alarm);
          nurse2.setTargetAlarm(alarm2);
 	},
 	
 	zoomScreen:function(){
-		ig.system.context.scale(1.4,1.4);
+		ig.system.context.scale(1 + this.scaleFactor, 1 + this.scaleFactor);
 		this.zoomed = true;
+		this.scaling = true;
+	},
+	
+	unZoom:function(){
+		ig.system.context.scale(.4, .4);
+		this.unscaling = true;
+		this.zoomed = false;
 
 	},
 	
@@ -125,8 +135,8 @@ HospitalLevel = ig.Game.extend({
              this.screen.x = player.pos.x - ig.system.width/2;
              this.screen.y = player.pos.y - ig.system.height/2;
         } else if(this.zoomed){
-        	this.screen.x = player.pos.x - ig.system.width/2 + 70;
-             this.screen.y = player.pos.y - ig.system.height/2 + 40;
+        	this.screen.x = player.pos.x - ig.system.width/2 + (2000 * this.scaleFactor);
+             this.screen.y = player.pos.y - ig.system.height/2 + (800 * this.scaleFactor);
         }
         if(this.gameEndTimer){
         	if(this.gameEndTimer.delta() > 2){
@@ -140,7 +150,24 @@ HospitalLevel = ig.Game.extend({
         	}
         }
          
+		if(this.scaling){
+			this.zoomScreen();
+			this.scaleFactor += .005;
+			if(this.scaleFactor > .1){
+				this.scaling = false;
+			}
+		}
 		
+		/*
+		if(this.unscaling){
+			this.unZoom();
+			this.scaleFactor -= .005;
+			if(this.scaleFactor <= .5){
+				this.unscaling = false;
+
+			}
+		}
+		*/
 		// Add your own, additional update code here
 	},
                         
