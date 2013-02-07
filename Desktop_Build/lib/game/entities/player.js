@@ -167,15 +167,7 @@ EntityPlayer = ig.Entity.extend({
 						
 			}
 		}
-		/*
-		if ( this.vel.y < 0 && this.isClimbing && this.momentumDirection.y == -1){
-            this.currentAnim = this.anims.climbUp; // create your own climbing animations
-            
-        }else if ( this.vel.y > 0 && this.isClimbing && this.momentumDirection.y == 1){
-            this.currentAnim = this.anims.climbDown; // create your own climbing animations
-            
-        }
-        */
+
 		
 		this.currentAnim.flip.x = this.flip;
 		
@@ -192,7 +184,7 @@ EntityPlayer = ig.Entity.extend({
 	
 	execute:function(){
 		this.currentAnim = this.anims.execution;
-		
+		//this.currentAnim.rewind();
 	},
 	
 	moveDesktop:function(){
@@ -210,7 +202,8 @@ EntityPlayer = ig.Entity.extend({
         	if (!this.canClimb)this.isClimbing=false; // don't allow moving horizontally off the while in climbing mode
 		}
 		
-		if( this.canClimb ) {           
+		if( this.canClimb ) {   
+			this.vel.y = 0;        
             if(ig.input.state("up") || ig.input.state("down")){
 	            this.isClimbing=true;
 	            console.log("CLIMBING");
@@ -305,6 +298,7 @@ EntityPlayer = ig.Entity.extend({
   		if(ig.input.pressed('execute') && other.name == "enemy"){
   			this.executing = true;
   			other.setExecution();
+  			this.currentAnim.rewind();
   			this.resetExecution(other);
   		} 
 	},
