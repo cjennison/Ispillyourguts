@@ -29,7 +29,7 @@ HospitalLevel = ig.Game.extend({
 	// Load a font
 	font: new ig.Font( 'media/font/04b03.font.png' ),
     gravity: 150,
-    fallHeight: 600,
+    fallHeight: 800,
                         
     //Buttons
     buttons: [],
