@@ -12,8 +12,9 @@ ig.module(
       checkAgainst: ig.Entity.TYPE.A, // your player is TYPE.A
       collides: ig.Entity.COLLIDES.FIXED,
         
-        size:{x:16,y:48},    
-        animSheet: new ig.AnimationSheet('media/simpledoor.png',16,48),
+        size:{x:30,y:48},
+        offset:{x:22, y:10},
+        animSheet: new ig.AnimationSheet('media/objects/door.png',60,60),
         
         openSound: new ig.Sound("media/effects/Door Open.*"),
 
@@ -41,6 +42,7 @@ ig.module(
         check: function(other) {
             if(other==ig.game.getEntitiesByType(EntityPlayer)[0]) {
   				this.currentAnim = this.anims.open;
+  				this.pos.x 
   				if(this.openPlayed == false){
   					 this.openSound.play();
   					 this.openPlayed = true;
