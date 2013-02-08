@@ -53,6 +53,9 @@ EntityPlayer = ig.Entity.extend({
 		this.addAnim( 'run', 0.1, [3,4,5,6,7,8] );
 		this.addAnim( 'jump', 1, [8] );
 		this.addAnim( 'fall', 0.4, [6,7] );
+		this.addAnim( 'climb', 0.2,[50,51]);
+		this.addAnim( 'climbIdle', 1,[50])
+
 		this.addAnim('crouch', 0.1, [11,12,13]);
 		this.addAnim('crouchidle', 1, [13]);
 		this.addAnim('crouchwalk', 0.1, [13,14,15]);
@@ -143,7 +146,14 @@ EntityPlayer = ig.Entity.extend({
 		
 		// set the current animation, based on the player's speed
 		if(!this.attacking){
-			if( this.vel.y < 0 ) {
+			 if(this.isClimbing && (ig.input.state("up") || ig.input.state("down"))){
+			 	
+				this.currentAnim = this.anims.climb;
+			 } else if(this.isClimbing){
+			 	this.currentAnim = this.anims.climbIdle;
+
+			 }
+			else if( this.vel.y < 0 ) {
 				this.currentAnim = this.anims.jump;
 			}
 			else if( this.vel.y > 0 ) {
@@ -156,6 +166,7 @@ EntityPlayer = ig.Entity.extend({
 				this.currentAnim = this.anims.run;
 				//this.footStepsSound.play();
 			}
+			
 			else {
 				if(!this.crouching){
 					this.currentAnim = this.anims.idle;
@@ -208,22 +219,28 @@ EntityPlayer = ig.Entity.extend({
 		}
 		
 		if( this.canClimb ) {   
-			this.vel.y = 0;        
+			//this.vel.y = 0;        
             if(ig.input.state("up") || ig.input.state("down")){
 	            this.isClimbing=true;
 	            console.log("CLIMBING");
 	            
-	            //this.vel.x = 0; // don't fall off sides of ladder unintentionally
+	            this.vel.x = 0; // don't fall off sides of ladder unintentionally
 	            
 	            //momentumDirection allows for up, down and idle movement (-1, 0 & 1) so you can stop on ladders
 	            if (ig.input.state("up")) {
-	                this.vel.y = -this.ladderSpeed;
+	                this.pos.y += -1;
 	
 	            }else if( ig.input.state("down")){
-					this.vel.y = this.ladderSpeed;
+					this.pos.y += 1;
 	            }
             }
         }       
+		
+		if(this.isClimbing){
+			this.gravityFactor = 0;
+			this.vel.y = 0;
+
+		} else { this.gravityFactor = 1;}
 		
 		if(ig.input.state("crouch")){
 			this.crouching = true;
@@ -284,6 +301,9 @@ EntityPlayer = ig.Entity.extend({
 	
 		if(other.name == "ladder"){
 			this.canClimb = true;
+			if(ig.input.state("up") || ig.input.state("down")){
+				this.pos.x = other.pos.x - 7;
+			}
 			return;
 		} else {
 			
@@ -295,11 +315,8 @@ EntityPlayer = ig.Entity.extend({
   		
   		if(this.attacking && other.name == "enemy"){
   			//console.log(other);
-<<<<<<< HEAD
-  			if(!Data.firstKill){
-=======
+  		
   			if(!Data.firstKill && !other.dead){
->>>>>>> Lots of fixes.
 				ig.game.queAchievement("babysfirstkill");
 				Data.firstKill = true;
 			}
