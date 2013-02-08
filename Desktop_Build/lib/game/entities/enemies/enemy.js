@@ -7,7 +7,7 @@ ig.module(
 .defines(function(){
 	
 EntityEnemy = ig.Entity.extend({
-	size: {x: 30, y: 47},
+	size: {x: 60, y: 47},
 	maxVel: {x: 100, y: 100},
 	friction: {x: 150, y: 0},
 	
@@ -35,7 +35,7 @@ EntityEnemy = ig.Entity.extend({
 	positionChecker:0, //check if you haven't moved.
 	lastX: null,
 	
-	animSheet: new ig.AnimationSheet( 'media/enemyNurse_one.png', 32, 48  ),
+	animSheet: new ig.AnimationSheet( 'media/enemyNurse_one.png', 60, 60  ),
 	
 	hitSound: new ig.Sound("media/effects/Enemy Hit Gore.*"),
 
@@ -43,8 +43,9 @@ EntityEnemy = ig.Entity.extend({
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
 		
-		this.addAnim( 'walk', 0.5, [0,1,2,3] );
-		this.addAnim( 'run', 0.2, [0,1,2,3] );
+		this.addAnim( 'walk', 0.3, [0,1,2,3] );
+		this.addAnim( 'run', 0.2, [6,7,8,9] );
+		this.addAnim( 'fear', 1, [5] );
 		this.positionChecker = new ig.Timer();
 	},
 	
@@ -54,7 +55,7 @@ EntityEnemy = ig.Entity.extend({
 	},
 	
 	execute: function(){
-		
+		this.currentAnim = this.anims.fear;
 	},
 	
 	update: function() {
@@ -95,6 +96,7 @@ EntityEnemy = ig.Entity.extend({
         	//Get Alarm Position, Go to it.
         	//Proceed to Freak Out    
         	//console.log("AHHH");
+        	this.currentAnim = this.anims.run;
         	if(this.foundAlarm == false){
             	this.movetoAlarm();
             } else {
