@@ -58,7 +58,7 @@ EntityPlayer = ig.Entity.extend({
 
 		this.addAnim('crouch', 0.1, [11,12,13]);
 		this.addAnim('crouchidle', 1, [13]);
-		this.addAnim('crouchwalk', 0.1, [13,14,15]);
+		this.addAnim('crouchwalk', 0.1, [12,13,14,15]);
 		this.addAnim('quickAttack', 0.1, [20,21,22,23,24], false);
 		this.addAnim('execution', 0.3, [31,32,33,34]);
 
@@ -72,11 +72,15 @@ EntityPlayer = ig.Entity.extend({
 		
 		if(ig.game.dialogueActive){
 			this.parent();
+			this.currentAnim.flip.x = this.flip;
+
 			return;
 		}
 
 		if(this.executing){
 			this.execute();
+			this.currentAnim.flip.x = this.flip;
+
 			this.parent();
 			return;
 		}

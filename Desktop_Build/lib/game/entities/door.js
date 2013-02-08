@@ -12,7 +12,7 @@ ig.module(
       checkAgainst: ig.Entity.TYPE.A, // your player is TYPE.A
       collides: ig.Entity.COLLIDES.FIXED,
         
-        size:{x:30,y:48},
+        size:{x:20,y:48},
         offset:{x:22, y:10},
         animSheet: new ig.AnimationSheet('media/objects/door.png',60,60),
         
