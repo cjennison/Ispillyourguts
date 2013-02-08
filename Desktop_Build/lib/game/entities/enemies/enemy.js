@@ -144,7 +144,7 @@ EntityEnemy = ig.Entity.extend({
 			}
 			
 			
-			this.flip = !this.flip;
+			this.flip = this.panicDirection;
 
 			this.randomMovementTimer.reset();
 		}
