@@ -10,6 +10,12 @@ var Achievements = {
 		url:"media/achievements/achievements.png",
 		x:0,
 		y:1,
+	},
+	
+	headandshoulders:{
+		url:"media/achievements/achievements.png",
+		x:0,
+		y:2,
 	}
 	
 	

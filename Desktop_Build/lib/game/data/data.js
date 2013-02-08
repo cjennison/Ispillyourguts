@@ -1,5 +1,6 @@
 var Data = {
 	firstKill : false,
-	firstExecution : false
+	firstExecution : false,
+	doctorDecapitated: false,
 }
 

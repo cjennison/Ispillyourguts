@@ -57,8 +57,8 @@ EntityPlayer = ig.Entity.extend({
 		this.addAnim( 'climbIdle', 1,[50])
 
 		this.addAnim('crouch', 0.1, [11,12,13]);
-		this.addAnim('crouchidle', 1, [13]);
-		this.addAnim('crouchwalk', 0.1, [12,13,14,13]);
+		this.addAnim('crouchidle', 1, [12]);
+		this.addAnim('crouchwalk', 0.1, [13,14,13]);
 		this.addAnim('quickAttack', 0.1, [20,21,22,23,24], false);
 		this.addAnim('execution', 0.3, [31,32,33,34]);
 
@@ -342,6 +342,14 @@ EntityPlayer = ig.Entity.extend({
   			this.resetExecution(other);
   		} 
   		
+  		if((ig.input.pressed('execute') || ig.input.pressed('quickAttack')) && other.name == "boss" && other.dead == false){
+  			ig.game.zoomScreen();
+  			this.executing = true;
+
+  			//other.performBossFinal();
+  			this.resetExecution(other);
+  		}
+  		
   		if(ig.input.pressed("interact") && other.name == "weapon"){
   			console.log("touch");
   			ig.game.setEquippedWeapon(other.wepType);
@@ -357,7 +365,7 @@ EntityPlayer = ig.Entity.extend({
 
 	  		ig.game.enrage();
 	  		ig.game.unZoom();
-	  		if(!Data.firstExecution){
+	  		if(!Data.firstExecution && other.name != "boss"){
 				ig.game.queAchievement("sorethroat");
 				Data.firstExecution = true;
 			}

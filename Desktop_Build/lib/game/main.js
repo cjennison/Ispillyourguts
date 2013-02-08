@@ -27,6 +27,7 @@ ig.module(
     'game.entities.ladder',
     'game.entities.door',
     'game.entities.alarm',
+    'game.entities.bosses.doctor',
     'game.entities.stealthobject',
     'game.entities.hospitalbed',
     'game.entities.boxes',
@@ -136,6 +137,7 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntityBoxes, 1280, 450);
          this.spawnEntity(EntitySurgicalTable, 160, 480);
          this.spawnEntity(EntityCoffeeTable, 1630, 450);
+         this.spawnEntity(EntityBossDoctor, 1780, 460);
          
          this.spawnEntity(EntityWeaponWire, 1630, 450);
          
