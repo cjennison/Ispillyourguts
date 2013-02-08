@@ -49,7 +49,7 @@ EntityEnemy = ig.Entity.extend({
 		this.addAnim( 'run', 0.2, [11,12,13,14] );
 		this.addAnim( 'fear', 1, [10] );
 		this.addAnim( 'dying', 1, [20,21,22,23,24], false);
-		this.addAnim( 'dead', .5, [20,21,22,23,24], true);
+		this.addAnim( 'dead', .4, [20,21,22,23,24], true);
 		this.positionChecker = new ig.Timer();
 	},
 	
@@ -66,7 +66,7 @@ EntityEnemy = ig.Entity.extend({
 		
 		if(this.dead){
 			if(this.deadTimer){
-				if(this.deadTimer.delta() > 3){
+				if(this.deadTimer.delta() > 4){
 					this.currentAnim = this.anims.dead;
 				}
 			}
