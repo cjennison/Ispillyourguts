@@ -9,8 +9,7 @@ ig.module(
 	
 EntityDialogue = ig.Entity.extend({
 	size: {x: 16, y: 9},
-	font: new ig.Font( 'media/font/molot.font.png' ),
-	animSheet: new ig.AnimationSheet( 'media/screens/intro/overlay.png', 568, 240 ),
+	animSheet: new ig.AnimationSheet( 'media/achievements/achievements.png', 350, 60 ),
 	zIndex:1000,
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
@@ -18,7 +17,9 @@ EntityDialogue = ig.Entity.extend({
 		
 	},
 	
-	
+	setAnimation:function(){
+		//this.
+	},
 	
 	update: function() {
        
