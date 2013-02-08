@@ -14,6 +14,7 @@ EntityBossDoctor = ig.Entity.extend({
 	offset:{x:0, y:0},
 	animSheet: new ig.AnimationSheet( 'media/levels/hospital/bossDoc.png', 70, 60 ),
 	type: ig.Entity.TYPE.B, // Evil enemy group
+	collides: ig.Entity.COLLIDES.PASSIVE,
 	
 	deadTimer:null,
 	

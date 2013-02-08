@@ -40,6 +40,7 @@ EntityEnemy = ig.Entity.extend({
 	animSheet: new ig.AnimationSheet( 'media/enemyNurse_one.png', 60, 60  ),
 	
 	hitSound: new ig.Sound("media/effects/Enemy Hit Gore.*"),
+    screamSound: new ig.Sound('media/Effects/womanscream1.*'),
 
 	
 	init: function( x, y, settings ) {
@@ -173,6 +174,7 @@ EntityEnemy = ig.Entity.extend({
 	
 	
 	checkSight: function(){
+		if(this.alerted){return;}
 		var player = ig.game.getEntitiesByType(EntityPlayer)[0];
 		//console.log(this.flip);
 		var sightType = "none";
@@ -195,12 +197,15 @@ EntityEnemy = ig.Entity.extend({
 						
 			if(this.distanceTo(player) < 100 && player.pos.x < this.pos.x){
 				this.alerted = true;
+				this.screamSound.play();
 			}
 			
 		} else {
 		// ->
 			if(this.distanceTo(player) < 100 && player.pos.x > this.pos.x){
 				this.alerted = true;
+				this.screamSound.play();
+
 			}
 		}
 		

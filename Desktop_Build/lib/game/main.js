@@ -41,7 +41,7 @@ HospitalLevel = ig.Game.extend({
 	// Load a font
 	font: new ig.Font( 'media/font/04b03.font.png' ),
 	equipFont: new ig.Font( 'media/font/04b03.font.png' ),
-
+	clearColor:'#009ded',
     gravity: 150,
     fallHeight: 800,
                         
@@ -58,6 +58,8 @@ HospitalLevel = ig.Game.extend({
     enraged:false,
     enragedTimer:null,
     rageOverlay: new ig.Image('media/ui/rageoverlay.png'),
+    rageSound: new ig.Sound('media/Effects/heartbeat.*'),
+    
     zoomed:false,
     scaleFactor: 0,
     scaling: false,
@@ -137,9 +139,10 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntityBoxes, 1280, 450);
          this.spawnEntity(EntitySurgicalTable, 160, 480);
          this.spawnEntity(EntityCoffeeTable, 1630, 450);
-         this.spawnEntity(EntityBossDoctor, 1780, 460);
+                  this.spawnEntity(EntityWeaponWire, 1630, 450);
+
+         this.spawnEntity(EntityBossDoctor, 1780, 470);
          
-         this.spawnEntity(EntityWeaponWire, 1630, 450);
          
 		 this.spawnEntity(EntityPlayer, 32, 480);
 
@@ -206,7 +209,7 @@ HospitalLevel = ig.Game.extend({
         	}
         }
         if(this.enraged){
-        	if(this.enrageTimer.delta() > 5){
+        	if(this.enrageTimer.delta() > 4){
         		this.enraged = false;
         		this.enrageTime = null;
         	}
@@ -289,6 +292,7 @@ HospitalLevel = ig.Game.extend({
     enrage: function(){
     	this.enrageTimer = new ig.Timer();
     	this.enraged = true;
+    	this.rageSound.play();
     },
     
     endGame: function(){

@@ -24,7 +24,7 @@ MainMenu = ig.Game.extend({
 		
 		// Initialize your game here; bind keys etc.
 		ig.music.add('media/music/MenuMusic.*', "mainmenu");
-		ig.music.add('media/music/theme.*', "hospital");
+		ig.music.add('media/music/leveloneambience.*', "hospital");
 		ig.music.loop = true;
 		ig.music.volume = .1;
 		ig.music.play();
