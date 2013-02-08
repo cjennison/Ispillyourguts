@@ -59,6 +59,7 @@ HospitalLevel = ig.Game.extend({
     enragedTimer:null,
     rageOverlay: new ig.Image('media/ui/rageoverlay.png'),
     rageSound: new ig.Sound('media/Effects/heartbeat.*'),
+    zoomSound: new ig.Sound('media/Effects/zoomin.*'),
     
     zoomed:false,
     scaleFactor: 0,
@@ -149,8 +150,8 @@ HospitalLevel = ig.Game.extend({
          var nurse = this.spawnEntity(EntityEnemy, 490, 460);
          var nurse2 = this.spawnEntity(EntityEnemy, 1280, 460);
          
-         var alarm = this.getEntitiesByType(EntityAlarm)[0];
-         var alarm2 = this.getEntitiesByType(EntityAlarm)[1];
+         var alarm = this.getEntitiesByType(EntityAlarm)[1];
+         var alarm2 = this.getEntitiesByType(EntityAlarm)[0];
          nurse.setTargetAlarm(alarm);
          nurse2.setTargetAlarm(alarm2);
          
@@ -170,6 +171,10 @@ HospitalLevel = ig.Game.extend({
 		
 		console.log(this.achievement)
     },
+	
+	playZoom:function(){
+		this.zoomSound.play();
+	},
 	
 	zoomScreen:function(){
 		ig.system.context.scale(1 + this.scaleFactor, 1 + this.scaleFactor);

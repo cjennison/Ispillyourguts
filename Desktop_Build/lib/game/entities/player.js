@@ -42,8 +42,9 @@ EntityPlayer = ig.Entity.extend({
     
     lightAttackSound: new ig.Sound("media/effects/Light atk 1.*"),
     footStepsSound: new ig.Sound("media/effects/Footsteps.*"),
-
-    
+	hitSound: new ig.Sound("media/effects/Enemy Hit Gore.*"),
+	heavyAttackSound: new ig.Sound("media/effects/heavyatk.*"),
+	
     attackTimer:null,
 	
 	init: function( x, y, settings ) {
@@ -335,6 +336,8 @@ EntityPlayer = ig.Entity.extend({
   		if(ig.input.pressed('execute') && other.name == "enemy" && !other.dead){
   			this.executing = true;
   			ig.game.zoomScreen();
+  			ig.game.playZoom();
+			this.heavyAttackSound.play();
   			other.setExecution();
   			//ig.game.createBlood("thin splatter", other.pos.x, other.pos.y, other);
 
@@ -345,6 +348,8 @@ EntityPlayer = ig.Entity.extend({
   		if((ig.input.pressed('execute') || ig.input.pressed('quickAttack')) && other.name == "boss" && other.dead == false){
   			ig.game.zoomScreen();
   			this.executing = true;
+			ig.game.playZoom();
+			this.heavyAttackSound.play();
 
   			//other.performBossFinal();
   			this.resetExecution(other);
@@ -369,6 +374,8 @@ EntityPlayer = ig.Entity.extend({
 				ig.game.queAchievement("sorethroat");
 				Data.firstExecution = true;
 			}
+			this.hitSound.play();
+
 		}, 1000)
 		
 	}
