@@ -10,7 +10,8 @@ EntityBlackOverlay = ig.Entity.extend({
 	size: {x: 16, y: 9},
 	
 	animSheet: new ig.AnimationSheet( 'media/screens/intro/overlay.png', 900, 640 ),
-	
+	      collides: ig.Entity.COLLIDES.FIXED,
+	gravityFactor:0,
 	zIndex: 10000000,
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );

@@ -114,7 +114,8 @@ HospitalLevel = ig.Game.extend({
          nurse.setTargetAlarm(alarm);
          nurse2.setTargetAlarm(alarm2);
          
-         this.spawnEntity(EntityDialogue, this.screen.x, this.screen.y);
+        var dialogue =  this.spawnEntity(EntityDialogue, 142 - ig.system.width/2, 462 - ig.system.height/2);
+		dialogue.setText("I need to get out of his Hospital \n and find a way to follow Joe..")
 	},
 	
 	zoomScreen:function(){
