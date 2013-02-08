@@ -137,7 +137,7 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntitySurgicalTable, 160, 480);
          this.spawnEntity(EntityCoffeeTable, 1630, 450);
          
-         this.spawnEntity(EntityWeaponWire, 130, 440);
+         this.spawnEntity(EntityWeaponWire, 1630, 450);
          
 		 this.spawnEntity(EntityPlayer, 32, 480);
 
@@ -272,7 +272,7 @@ HospitalLevel = ig.Game.extend({
 	startDialogue: function(){
 		this.dialogueActive = true;
 		var dialogue =  this.spawnEntity(EntityDialogue, 142 - ig.system.width/2, 462 - ig.system.height/2);
-		dialogue.setText("I need to get out of his Hospital \n and find a way to follow Joe..")
+		dialogue.setText("I need to get out of this Hospital \n and find a way to follow Joe..")
 	},
                         
     loadLevel: function( data ) {
@@ -325,7 +325,7 @@ HospitalLevel = ig.Game.extend({
 		}
 		
 		if(this.alertWeaponEquip == true){
-			this.equipFont.draw("EQUIPPED " + this.equippedWeapon, x, 200);
+			this.equipFont.draw("EQUIPPED " + this.equippedWeapon, x, 200, ig.Font.ALIGN.CENTER);
 			if(this.wepEquipTimer.delta() > 5){
 				this.alertWeaponEquip = false;
 				this.wepEquipeTimer = null;
