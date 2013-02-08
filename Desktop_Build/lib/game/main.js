@@ -15,6 +15,7 @@ ig.module(
 	'plugins.zmagic',
     'plugins.analog-stick',
     'game.screens.mainmenu',
+	'game.entities.objects.weapons',
     'game.screens.introduction',
 	'game.entities.objects.objects',
     'game.entities.enemies.enemy',
@@ -38,6 +39,8 @@ HospitalLevel = ig.Game.extend({
 	
 	// Load a font
 	font: new ig.Font( 'media/font/04b03.font.png' ),
+	equipFont: new ig.Font( 'media/font/04b03.font.png' ),
+
     gravity: 150,
     fallHeight: 800,
                         
@@ -65,6 +68,9 @@ HospitalLevel = ig.Game.extend({
 	achievementFade:0,
 	achievementDisplayed:false,
 	
+	equippedWeapon:null,
+	alertWeaponEquip:false,
+	wepEquipTimer:null,
 	
 	
 	init: function() {
@@ -88,6 +94,8 @@ HospitalLevel = ig.Game.extend({
          ig.input.bind(ig.KEY.ENTER, 'enter');
          ig.input.bind(ig.KEY.Z, 'quickAttack');
          ig.input.bind(ig.KEY.X, 'execute');
+         ig.input.bind(ig.KEY.SHIFT, 'interact');
+
                         
          if(ig.ua.mobile){
              var yPos = ig.system.height - 48;
@@ -129,6 +137,8 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntitySurgicalTable, 160, 480);
          this.spawnEntity(EntityCoffeeTable, 1630, 450);
          
+         this.spawnEntity(EntityWeaponWire, 130, 440);
+         
 		 this.spawnEntity(EntityPlayer, 32, 480);
 
          var nurse = this.spawnEntity(EntityEnemy, 490, 460);
@@ -168,6 +178,13 @@ HospitalLevel = ig.Game.extend({
 		this.scaleFactor = 0;
 		this.zoomed = false;
 
+	},
+	
+	setEquippedWeapon:function(weapon){
+		this.equippedWeapon = weapon;
+		console.log("EQUIPPED: " + weapon );
+		this.alertWeaponEquip = true;
+		this.wepEquipTimer = new ig.Timer();
 	},
 	
 	update: function() {
@@ -305,6 +322,14 @@ HospitalLevel = ig.Game.extend({
 			
 		if(this.gameOver){
 			this.font.draw( 'You Died', x, y - 30, ig.Font.ALIGN.CENTER );
+		}
+		
+		if(this.alertWeaponEquip == true){
+			this.equipFont.draw("EQUIPPED " + this.equippedWeapon, x, 200);
+			if(this.wepEquipTimer.delta() > 5){
+				this.alertWeaponEquip = false;
+				this.wepEquipeTimer = null;
+			}
 		}
 		
 		//this.font.draw( 'It Works!', x, y, ig.Font.ALIGN.CENTER );

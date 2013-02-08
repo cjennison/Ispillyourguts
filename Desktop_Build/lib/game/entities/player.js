@@ -341,6 +341,12 @@ EntityPlayer = ig.Entity.extend({
   			//this.currentAnim.rewind();
   			this.resetExecution(other);
   		} 
+  		
+  		if(ig.input.pressed("interact") && other.name == "weapon"){
+  			console.log("touch");
+  			ig.game.setEquippedWeapon(other.wepType);
+  			other.kill();
+  		}
 	},
 	
 	resetExecution:function(other){
