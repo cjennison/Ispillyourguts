@@ -62,7 +62,61 @@ ig.module(
 		update: function() {
 	        this.parent();
 		},
-	})
+	});
+	
+	EntityPosterOne = ig.Entity.extend({
+		size: {x: 59, y: 30},
+		animSheet: new ig.AnimationSheet( 'media/objects/posterone.png', 33, 43 ),
+	
+		
+		init: function( x, y, settings ) {
+			this.parent( x, y, settings );
+			console.log(settings);
+			this.gravityFactor = 0;
+			this.addAnim( 'idle', 1, [0] );
+		},
+		
+		
+		update: function() {
+	        this.parent();
+		},
+	});
+	
+	EntityPosterTwo = ig.Entity.extend({
+		size: {x: 59, y: 30},
+		animSheet: new ig.AnimationSheet( 'media/objects/postertwo.png', 30, 46 ),
+	
+		
+		init: function( x, y, settings ) {
+			this.parent( x, y, settings );
+			console.log(settings);
+			this.gravityFactor = 0;
+			this.addAnim( 'idle', 1, [0] );
+		},
+		
+		
+		update: function() {
+	        this.parent();
+		},
+	});
+	
+	EntityPosterThree = ig.Entity.extend({
+		size: {x: 59, y: 30},
+		animSheet: new ig.AnimationSheet( 'media/objects/posterthree.png', 37, 52 ),
+	
+		
+		init: function( x, y, settings ) {
+			this.parent( x, y, settings );
+			console.log(settings);
+			this.gravityFactor = 0;
+			this.addAnim( 'idle', 1, [0] );
+		},
+		
+		
+		update: function() {
+	        this.parent();
+		},
+	});
 	
 
 });

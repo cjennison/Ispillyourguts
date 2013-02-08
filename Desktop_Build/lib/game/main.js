@@ -134,13 +134,17 @@ HospitalLevel = ig.Game.extend({
                                 */
                        
          this.loadLevel(LevelHospital);
+        // this.spawnEntity(EntityPosterOne, 210, 450);
          this.spawnEntity(EntityStealthobject, 400, 460);
          this.spawnEntity(EntityHospitalbed, 40, 470);
          this.spawnEntity(EntityBoxes, 400, 580);
          this.spawnEntity(EntityBoxes, 1280, 450);
+         this.spawnEntity(EntityPosterOne, 240, 450);
+         this.spawnEntity(EntityPosterTwo, 635, 450);
+         this.spawnEntity(EntityPosterThree, 1135, 450);
          this.spawnEntity(EntitySurgicalTable, 160, 480);
          this.spawnEntity(EntityCoffeeTable, 1630, 450);
-                  this.spawnEntity(EntityWeaponWire, 1630, 450);
+         this.spawnEntity(EntityWeaponWire, 1630, 450);
 
          this.spawnEntity(EntityBossDoctor, 1780, 470);
          
