@@ -18,7 +18,6 @@ ig.module(
         
         openSound: new ig.Sound("media/effects/Door Open.*"),
 
-		closeSound: new ig.Sound("media/effects/Door Open.*"),
 		openPlayed:false,
 		closePlayed:false,
     

@@ -365,7 +365,7 @@ HospitalLevel = ig.Game.extend({
          }
          
          ig.System.drawMode = ig.System.DRAW.SMOOTH;
-         ig.Sound.use = [ig.Sound.FORMAT.CAF, ig.Sound.FORMAT.OGG, ig.Sound.FORMAT.MP3];
+         //ig.Sound.use = [ig.Sound.FORMAT.CAF, ig.Sound.FORMAT.OGG, ig.Sound.FORMAT.MP3];
 		ig.main( '#canvas', Introduction, 60, width, height, 1 );
 
 });
