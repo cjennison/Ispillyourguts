@@ -36,8 +36,10 @@ ig.module(
         check:function(other){
         	
         	if(ig.input.state("crouch")){
+        		
         		other.currentAnim.alpha = .3;
         		other.hiding = true;
+        		
         	} else {
         		other.hiding = false;
         		other.currentAnim.alpha = 1;
