@@ -24,6 +24,25 @@ ig.module(
 		update: function() {
 	        this.parent();
 		},
+	});
+	
+	EntityEndTable = ig.Entity.extend({
+		size: {x: 27, y: 32},
+		animSheet: new ig.AnimationSheet( 'media/objects/coffeetablething.png', 22, 29 ),
+		type: ig.Entity.TYPE.A,
+	
+		
+		init: function( x, y, settings ) {
+			this.parent( x, y, settings );
+			console.log(settings);
+			
+			this.addAnim( 'idle', 1, [0] );
+		},
+		
+		
+		update: function() {
+	        this.parent();
+		},
 	})
 	
 
