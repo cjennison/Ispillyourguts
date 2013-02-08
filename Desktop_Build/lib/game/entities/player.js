@@ -57,7 +57,7 @@ EntityPlayer = ig.Entity.extend({
 		this.addAnim('crouchidle', 1, [13]);
 		this.addAnim('crouchwalk', 0.1, [13,14,15]);
 		this.addAnim('quickAttack', 0.1, [20,21,22,23,24], false);
-		this.addAnim('execution', 0.3, [31,32,33,34], false);
+		this.addAnim('execution', 0.3, [31,32,33,34]);
 
 		
 		//if (!ig.global.wm)ig.game.sortEntitiesDeferred();
@@ -295,7 +295,11 @@ EntityPlayer = ig.Entity.extend({
   		
   		if(this.attacking && other.name == "enemy"){
   			//console.log(other);
+<<<<<<< HEAD
   			if(!Data.firstKill){
+=======
+  			if(!Data.firstKill && !other.dead){
+>>>>>>> Lots of fixes.
 				ig.game.queAchievement("babysfirstkill");
 				Data.firstKill = true;
 			}
@@ -304,11 +308,11 @@ EntityPlayer = ig.Entity.extend({
   		
   		
   		
-  		if(ig.input.pressed('execute') && other.name == "enemy"){
+  		if(ig.input.pressed('execute') && other.name == "enemy" && !other.dead){
   			this.executing = true;
   			ig.game.zoomScreen();
   			other.setExecution();
-  			this.currentAnim.rewind();
+  			//this.currentAnim.rewind();
   			this.resetExecution(other);
   		} 
 	},

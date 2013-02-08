@@ -19,6 +19,8 @@ EntityEnemy = ig.Entity.extend({
 	
 	health: 10,
 	
+	dead:false,
+	deadTimer:null,
 	beingExecuted:false, //Am I being killed?
 	awareness: 20,
 	alerted:false,
@@ -44,8 +46,10 @@ EntityEnemy = ig.Entity.extend({
 		this.parent( x, y, settings );
 		
 		this.addAnim( 'walk', 0.3, [0,1,2,3] );
-		this.addAnim( 'run', 0.2, [6,7,8,9] );
-		this.addAnim( 'fear', 1, [5] );
+		this.addAnim( 'run', 0.2, [11,12,13,14] );
+		this.addAnim( 'fear', 1, [10] );
+		this.addAnim( 'dying', 1, [20,21,22,23,24], false);
+		this.addAnim( 'dead', .5, [20,21,22,23,24], true);
 		this.positionChecker = new ig.Timer();
 	},
 	
@@ -59,8 +63,20 @@ EntityEnemy = ig.Entity.extend({
 	},
 	
 	update: function() {
+		
+		if(this.dead){
+			if(this.deadTimer){
+				if(this.deadTimer.delta() > 3){
+					this.currentAnim = this.anims.dead;
+				}
+			}
+			this.currentAnim.flip.x = this.flip;
+			this.parent();
+			return;
+		}
 		if(this.beingExecuted){
 			this.execute();
+			this.currentAnim.flip.x = this.flip;
 			this.parent();
 			return;
 		}
@@ -93,9 +109,6 @@ EntityEnemy = ig.Entity.extend({
         	this.checkSight();
         }
         if(this.alerted){
-        	//Get Alarm Position, Go to it.
-        	//Proceed to Freak Out    
-        	//console.log("AHHH");
         	this.currentAnim = this.anims.run;
         	if(this.foundAlarm == false){
             	this.movetoAlarm();
@@ -205,12 +218,18 @@ EntityEnemy = ig.Entity.extend({
 	},
 	
 	kill:function(){
-		
+		if(this.dead){return;}
 		this.hitSound.play();
-		ig.game.spawnEntity(EntityDeathExplosion, this.pos.x, this.pos.y);
+		this.deadTimer = new ig.Timer();
+		//ig.game.spawnEntity(EntityDeathExplosion, this.pos.x, this.pos.y);
+		this.dead = true;
+		this.currentAnim = this.anims.dying;
+					this.currentAnim.rewind();
 
 		
-		this.parent();
+
+		
+		//this.parent();
 	},
 	
 	setExecution:function(){
