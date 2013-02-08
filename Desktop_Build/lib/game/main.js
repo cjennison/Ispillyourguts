@@ -13,6 +13,7 @@ ig.module(
     'game.entities.player',
     'game.entities.ui.detectioneye',
     'game.entities.ui.blackoverlay',
+    'game.entities.ui.dialogue',
     'game.entities.ladder',
     'game.entities.door',
     'game.entities.alarm',
@@ -100,18 +101,20 @@ HospitalLevel = ig.Game.extend({
                        
          this.loadLevel(LevelHospital);
          //this.spawnEntity(EntityPlayer, 32, 480);
-         this.spawnEntity(EntityStealthobject, 400, 400);
-         this.spawnEntity(EntityHospitalbed, 20, 480);
+         this.spawnEntity(EntityStealthobject, 400, 460);
+         this.spawnEntity(EntityHospitalbed, 40, 470);
          this.spawnEntity(EntityBoxes, 400, 580);
          this.spawnEntity(EntityBoxes, 1280, 450);
 
-         var nurse = this.spawnEntity(EntityEnemy, 400, 460);
+         var nurse = this.spawnEntity(EntityEnemy, 490, 460);
          var nurse2 = this.spawnEntity(EntityEnemy, 1280, 460);
          
          var alarm = this.getEntitiesByType(EntityAlarm)[1];
          var alarm2 = this.getEntitiesByType(EntityAlarm)[0];
          nurse.setTargetAlarm(alarm);
          nurse2.setTargetAlarm(alarm2);
+         
+         this.spawnEntity(EntityDialogue, this.screen.x, this.screen.y);
 	},
 	
 	zoomScreen:function(){
@@ -123,6 +126,7 @@ HospitalLevel = ig.Game.extend({
 	unZoom:function(){
 		ig.system.context.scale(.4, .4);
 		this.unscaling = true;
+		this.scaleFactor = 0;
 		this.zoomed = false;
 
 	},

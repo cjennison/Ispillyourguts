@@ -8,9 +8,9 @@ ig.module(
     EntityHospitalbed = EntityStealthobject.extend({
        
         
-        size:{x:89,y:57},    
-        offset:{x:0, y:-16},
-        animSheet: new ig.AnimationSheet('media/objects/bed.png',89,57),
+        size:{x:101,y:60},    
+        offset:{x:0, y:-10},
+        animSheet: new ig.AnimationSheet('media/objects/bedfixed.png',101,56),
     
         init: function( x, y, settings ) {
             this.parent(x,y,settings );
