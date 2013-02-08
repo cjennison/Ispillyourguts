@@ -32,6 +32,9 @@ EntityEnemy = ig.Entity.extend({
 	flip: false,
 	alarm: null,
 	
+	positionChecker:0, //check if you haven't moved.
+	lastX: null,
+	
 	animSheet: new ig.AnimationSheet( 'media/enemyNurse_one.png', 32, 48  ),
 	
 	hitSound: new ig.Sound("media/effects/Enemy Hit Gore.*"),
@@ -42,6 +45,7 @@ EntityEnemy = ig.Entity.extend({
 		
 		this.addAnim( 'walk', 0.5, [0,1,2,3] );
 		this.addAnim( 'run', 0.2, [0,1,2,3] );
+		this.positionChecker = new ig.Timer();
 	},
 	
 	setTargetAlarm:function(alarm){
@@ -58,6 +62,18 @@ EntityEnemy = ig.Entity.extend({
 			this.execute();
 			this.parent();
 			return;
+		}
+		
+		
+		if(this.lastX != 0){
+			if(this.pos.x == this.lastX){
+				if(this.positionChecker.delta() > 1){
+					this.flip = !this.flip;
+					console.log("WOOPS")
+				}
+			} else {
+				this.positionChecker.reset();
+			}
 		}
 		
 		// near an edge? return!
@@ -86,8 +102,12 @@ EntityEnemy = ig.Entity.extend({
             }
         	
         }
-		
+				this.lastX = this.pos.x;
+
 		this.currentAnim.flip.x = this.flip;
+		
+		
+		
 		this.parent();
 	},
 	

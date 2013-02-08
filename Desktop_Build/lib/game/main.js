@@ -41,6 +41,7 @@ HospitalLevel = ig.Game.extend({
     gameEndTimer: null,
     gameOver: false,
     
+    dialogueActive:false,
     enraged:false,
     enragedTimer:null,
     rageOverlay: new ig.Image('media/ui/rageoverlay.png'),
@@ -114,9 +115,9 @@ HospitalLevel = ig.Game.extend({
          nurse.setTargetAlarm(alarm);
          nurse2.setTargetAlarm(alarm2);
          
-        var dialogue =  this.spawnEntity(EntityDialogue, 142 - ig.system.width/2, 462 - ig.system.height/2);
-		dialogue.setText("I need to get out of his Hospital \n and find a way to follow Joe..")
-	},
+         this.startDialogue();
+         
+       },
 	
 	zoomScreen:function(){
 		ig.system.context.scale(1 + this.scaleFactor, 1 + this.scaleFactor);
@@ -174,6 +175,12 @@ HospitalLevel = ig.Game.extend({
 		}
 		*/
 		// Add your own, additional update code here
+	},
+	
+	startDialogue: function(){
+		this.dialogueActive = true;
+		var dialogue =  this.spawnEntity(EntityDialogue, 142 - ig.system.width/2, 462 - ig.system.height/2);
+		dialogue.setText("I need to get out of his Hospital \n and find a way to follow Joe..")
 	},
                         
     loadLevel: function( data ) {

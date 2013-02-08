@@ -66,6 +66,11 @@ EntityPlayer = ig.Entity.extend({
 	
 	
 	update: function() {
+		
+		if(ig.game.dialogueActive){
+			this.parent();
+			return;
+		}
 
 		if(this.executing){
 			this.execute();
@@ -310,7 +315,6 @@ EntityPlayer = ig.Entity.extend({
 	  		other.kill();
 	  		ig.game.enrage();
 	  		ig.game.unZoom();
-	  		console.log(this);
 		}, 1000)
 		
 	}

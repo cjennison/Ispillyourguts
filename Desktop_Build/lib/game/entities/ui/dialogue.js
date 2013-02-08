@@ -13,12 +13,13 @@ EntityDialogue = ig.Entity.extend({
 	textObject: "Null",
 	animSheet: new ig.AnimationSheet( 'media/screens/intro/overlay.png', 568, 240 ),
 	zIndex:1000,
-	killTimer:new ig.Timer(),
+	killTimer:null,
 	init: function( x, y, settings ) {
 		this.parent( x, y, settings );
 		this.addAnim('idle', 1, [0])
 		this.currentAnim.alpha = .8;
 		this.gravityFactor = 0;
+		this.killTimer = new ig.Timer();
 
 	},
 	
@@ -29,14 +30,17 @@ EntityDialogue = ig.Entity.extend({
 	update: function() {
        var player = ig.game.getEntitiesByType(EntityPlayer)[0];
        if(player){
-       	 this.pos.x = player.pos.x - ig.system.width/2;
-             this.pos.y = player.pos.y - ig.system.height/2;
+       	 	this.pos.x = player.pos.x - ig.system.width/2;
+            this.pos.y = player.pos.y - ig.system.height/2;
        }
         
         if(this.killTimer.delta() > 5){
         	this.currentAnim.alpha -= .01;
-        	this.font.alpha -= 1;
+        	this.font.alpha -= .1;
         	if(this.currentAnim.alpha <= 0){
+        		this.currentAnim.alpha = 1;
+        		this.font.alpha = 1;
+        		this.killTimer = null;
         		this.kill();
         	}
         }
@@ -53,8 +57,12 @@ EntityDialogue = ig.Entity.extend({
         	this.font.draw( this.textObject, x, y, ig.Font.ALIGN.CENTER );
         	
         
-    }                  		                
+    },                  		                
 	
+	kill: function(){
+		ig.game.dialogueActive = false;
+		this.parent();	
+	}
 	
 	
 });
