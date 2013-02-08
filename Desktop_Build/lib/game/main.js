@@ -64,6 +64,7 @@ HospitalLevel = ig.Game.extend({
 
          ig.input.bind(ig.KEY.CTRL, 'crouch');
          ig.input.bind(ig.KEY.SPACE, 'jump');
+         ig.input.bind(ig.KEY.ENTER, 'enter');
          ig.input.bind(ig.KEY.Z, 'quickAttack');
          ig.input.bind(ig.KEY.X, 'execute');
                         

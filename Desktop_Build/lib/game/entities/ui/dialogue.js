@@ -45,6 +45,10 @@ EntityDialogue = ig.Entity.extend({
         	}
         }
         
+        if(ig.input.pressed('enter')){
+        	this.kill();
+        }
+        
         this.parent();
 	},
                                       
