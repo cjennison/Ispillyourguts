@@ -4,3 +4,4 @@ Crouch:0,1,2
 crouchWalk:3,4,5,4
 quickAttack:
 slitThroat:
+walk: 0,1,2,1
