@@ -224,7 +224,7 @@ EntityEnemy = ig.Entity.extend({
 		//ig.game.spawnEntity(EntityDeathExplosion, this.pos.x, this.pos.y);
 		this.dead = true;
 		this.currentAnim = this.anims.dying;
-					this.currentAnim.rewind();
+		this.currentAnim.rewind();
 
 		
 

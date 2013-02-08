@@ -324,6 +324,9 @@ EntityPlayer = ig.Entity.extend({
 				ig.game.queAchievement("babysfirstkill");
 				Data.firstKill = true;
 			}
+			if(other.dead == false){
+				ig.game.createBlood("splatter", other.pos.x, other.pos.y, other);
+			}
   			other.kill();
   		}
   		
@@ -333,6 +336,8 @@ EntityPlayer = ig.Entity.extend({
   			this.executing = true;
   			ig.game.zoomScreen();
   			other.setExecution();
+  			//ig.game.createBlood("thin splatter", other.pos.x, other.pos.y, other);
+
   			//this.currentAnim.rewind();
   			this.resetExecution(other);
   		} 
@@ -342,6 +347,8 @@ EntityPlayer = ig.Entity.extend({
 		setTimeout(function(){
 			ig.game.getEntitiesByType(EntityPlayer)[0].executing = false;
 	  		other.kill();
+  			ig.game.createBlood("thin splatter", other.pos.x, other.pos.y, other);
+
 	  		ig.game.enrage();
 	  		ig.game.unZoom();
 	  		if(!Data.firstExecution){

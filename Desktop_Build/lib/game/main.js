@@ -10,6 +10,8 @@ ig.module(
 	'impact.font',
     'impact.sound',
     'plugins.touch-button',
+    'plugins.touch-button',
+	'plugins.zmagic',
     'plugins.analog-stick',
     'game.screens.mainmenu',
     'game.screens.introduction',
@@ -25,7 +27,7 @@ ig.module(
     'game.entities.stealthobject',
     'game.entities.hospitalbed',
     'game.entities.boxes',
-
+    'game.entities.effect.blood',
     'game.levels.Hospital'
 )
 .defines(function(){
@@ -63,7 +65,7 @@ HospitalLevel = ig.Game.extend({
 	
 	init: function() {
 	
-	
+	new ig.Zmagic();
 		ig.music.next();
 	
 		// Initialize your game here; bind keys etc.
@@ -226,6 +228,16 @@ HospitalLevel = ig.Game.extend({
 	
 	setAchievementDisplayOff:function(){
 		this.displayingAchievement = false;
+	},
+	
+	createBlood: function(type, x, y, entity){
+		var blood = this.spawnEntity(EntityBlood, x, y);
+		ig.game.swapzIndex(blood, entity);
+		
+		var player = this.getEntitiesByType(EntityPlayer)[0];
+		ig.game.swapzIndex(blood, player);
+
+		
 	},
 	
 	startDialogue: function(){
