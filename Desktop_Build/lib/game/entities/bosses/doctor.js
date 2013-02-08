@@ -30,6 +30,11 @@ EntityBossDoctor = ig.Entity.extend({
 	decapitate:function(){
 		this.currentAnim = this.anims.dying;
 		this.deadTimer = new ig.Timer();
+		
+		if(!Data.doctorDecapitated){
+				ig.game.queAchievement("headsup");
+				Data.doctorDecapitated = true;
+			}
 	},
 
 	performBossFinal:function(){

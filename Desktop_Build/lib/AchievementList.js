@@ -12,7 +12,7 @@ var Achievements = {
 		y:1,
 	},
 	
-	headandshoulders:{
+	headsup:{
 		url:"media/achievements/achievements.png",
 		x:0,
 		y:2,
