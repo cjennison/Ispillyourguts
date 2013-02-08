@@ -127,7 +127,7 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntityBoxes, 400, 580);
          this.spawnEntity(EntityBoxes, 1280, 450);
          this.spawnEntity(EntitySurgicalTable, 160, 480);
-         this.spawnEntity(EntitySurgicalTable, 1590, 450);
+         this.spawnEntity(EntityCoffeeTable, 1630, 450);
          
 		 this.spawnEntity(EntityPlayer, 32, 480);
 
