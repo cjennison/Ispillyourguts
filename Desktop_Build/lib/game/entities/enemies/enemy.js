@@ -84,7 +84,7 @@ EntityEnemy = ig.Entity.extend({
 		
 		if(this.lastX != 0){
 			if(this.pos.x == this.lastX){
-				if(this.positionChecker.delta() > 1){
+				if(this.positionChecker.delta() > 2){
 					this.flip = !this.flip;
 					console.log("WOOPS")
 				}
@@ -120,11 +120,12 @@ EntityEnemy = ig.Entity.extend({
 			
 			if(this.alerted == false){
 				this.flip = !this.flip;
+			
+			}
 		}
-		}
-					this.currentAnim.flip.x = this.flip;
 
-		
+		this.currentAnim.flip.x = this.flip;
+
 		this.parent();
 	},
 	
@@ -140,11 +141,15 @@ EntityEnemy = ig.Entity.extend({
 			} else {
 				this.panicDirection = 1;
 			}
-						this.flip = !this.flip;
+			
+			
+			this.flip = !this.flip;
 
 			this.randomMovementTimer.reset();
 		}
-		this.currentAnim.flip.x = this.flip;
+		
+		
+		
 
 	},
 	

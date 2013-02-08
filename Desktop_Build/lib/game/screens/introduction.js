@@ -25,7 +25,7 @@ Introduction = ig.Game.extend({
 	
 	
 	init: function() {
-		
+
         ig.input.bind(ig.KEY.ENTER, 'start');
         
 	},

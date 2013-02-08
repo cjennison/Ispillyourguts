@@ -1,6 +1,7 @@
 console.log(Achievements.babysfirstkill);
 var AchievementsList = Achievements;
 var Data = Data;
+var zMagicInsantiation = false;
 
 ig.module( 
 	'game.main' 
@@ -63,9 +64,16 @@ HospitalLevel = ig.Game.extend({
 	achievementFade:0,
 	achievementDisplayed:false,
 	
-	init: function() {
 	
-	new ig.Zmagic();
+	
+	init: function() {
+		if(zMagicInsantiation == false){
+			new ig.Zmagic();
+			zMagicInsantiation = true;
+		}
+			
+				
+
 		ig.music.next();
 	
 		// Initialize your game here; bind keys etc.
