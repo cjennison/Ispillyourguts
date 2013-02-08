@@ -145,15 +145,15 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntitySurgicalTable, 160, 480);
          this.spawnEntity(EntityCoffeeTable, 1630, 450);
          this.spawnEntity(EntityWeaponWire, 1630, 450);
+          this.spawnEntity(EntityBossDoctor, 1780, 470);
 
-         this.spawnEntity(EntityBossDoctor, 1780, 470);
          
          
 		 this.spawnEntity(EntityPlayer, 32, 480);
 
          var nurse = this.spawnEntity(EntityEnemy, 490, 460);
          var nurse2 = this.spawnEntity(EntityEnemy, 1280, 460);
-         
+
          var alarm = this.getEntitiesByType(EntityAlarm)[1];
          var alarm2 = this.getEntitiesByType(EntityAlarm)[0];
          nurse.setTargetAlarm(alarm);
@@ -277,7 +277,7 @@ HospitalLevel = ig.Game.extend({
 		var blood = this.spawnEntity(EntityBlood, x, y);
 		ig.game.swapzIndex(blood, entity);
 		var player = this.getEntitiesByType(EntityPlayer)[0];
-		ig.game.swapzIndex(player, blood);
+		ig.game.swapzIndex(blood, player);
 		
 
 		
@@ -364,7 +364,7 @@ HospitalLevel = ig.Game.extend({
          	width = 568;
          }
          
-         //ig.System.drawMode = ig.System.DRAW.SUBPIXEL;
+         ig.System.drawMode = ig.System.DRAW.SMOOTH;
          ig.Sound.use = [ig.Sound.FORMAT.CAF, ig.Sound.FORMAT.OGG, ig.Sound.FORMAT.MP3];
 		ig.main( '#canvas', Introduction, 60, width, height, 1 );
 

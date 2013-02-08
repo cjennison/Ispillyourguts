@@ -61,7 +61,7 @@ EntityBossDoctor = ig.Entity.extend({
     kill:function(){
     	this.decapitate();
 		this.dead = true;
-		
+		this.collides= ig.Entity.COLLIDES.FIXED,
 		ig.game.spawnEntity(EntityHeadExplosion, this.pos.x, this.pos.y);
 		
 		
