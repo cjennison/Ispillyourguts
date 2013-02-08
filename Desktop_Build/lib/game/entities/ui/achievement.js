@@ -1,5 +1,5 @@
 ig.module(
-	'game.entities.ui.dialogue'
+	'game.entities.ui.achievement'
 )
 .requires(
 	'impact.entity',
@@ -7,7 +7,7 @@ ig.module(
 )
 .defines(function(){
 	
-EntityDialogue = ig.Entity.extend({
+EntityAchievement = ig.Entity.extend({
 	size: {x: 16, y: 9},
 	animSheet: new ig.AnimationSheet( 'media/achievements/achievements.png', 350, 60 ),
 	zIndex:1000,

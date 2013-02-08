@@ -1,3 +1,7 @@
+console.log(Achievements.babysfirstkill);
+var AchievementsList = Achievements;
+var Data = Data;
+
 ig.module( 
 	'game.main' 
 )
@@ -14,6 +18,7 @@ ig.module(
     'game.entities.ui.detectioneye',
     'game.entities.ui.blackoverlay',
     'game.entities.ui.dialogue',
+	'game.entities.ui.achievement',
     'game.entities.ladder',
     'game.entities.door',
     'game.entities.alarm',
@@ -49,7 +54,12 @@ HospitalLevel = ig.Game.extend({
     scaleFactor: 0,
     scaling: false,
     unscaling:false,
-
+	
+	achievement:null,
+	
+	displayingAchievement:false,
+	achievementFade:0,
+	achievementDisplayed:false,
 	
 	init: function() {
 	
@@ -86,7 +96,6 @@ HospitalLevel = ig.Game.extend({
          var x1 = baseSize + margin;
 
          this.stickLeft = new ig.AnalogStick( x1, y, baseSize, stickSize );                      
-        
                                /*
         //Smooth Scrolling                
         if( window.ejecta ) {
@@ -119,6 +128,19 @@ HospitalLevel = ig.Game.extend({
          this.startDialogue();
          
        },
+       
+    queAchievement:function(achieve, dataObject){
+    	var achObject = AchievementsList[achieve];
+    	console.log(achObject);
+    	var achAnimSheet = new ig.AnimationSheet(achObject.url, 150, 33)
+    	this.achievement = new ig.Animation(achAnimSheet, 1, [achObject.y]);
+    	console.log(achObject.y)
+    	this.displayingAchievement = true;
+    	
+		
+		
+		console.log(this.achievement)
+    },
 	
 	zoomScreen:function(){
 		ig.system.context.scale(1 + this.scaleFactor, 1 + this.scaleFactor);
@@ -165,6 +187,30 @@ HospitalLevel = ig.Game.extend({
 			}
 		}
 		
+		if(this.displayingAchievement && this.achievement && this.achievementDisplayed == false){
+			if(this.achievementFade < 1){
+				this.achievementFade += .01;
+				this.achievement.alpha = this.achievementFade;
+			} else {
+				this.achievementDisplayed = true;
+				
+				setTimeout(function(){
+					ig.game.setAchievementDisplayOff();
+				}, 3000)
+			}
+			
+		} else if(this.displayingAchievement == false & this.achievementFade > 0){
+			this.achievementFade -= .01;
+			this.achievement.alpha = this.achievementFade;
+			if(this.achievementFade < 0){
+				this.achievement = null;
+				this.achievementFade = 0;
+				this.displayingAchievement = false;
+				this.achievementDisplayed = false;
+			}
+		}
+	
+		
 		/*
 		if(this.unscaling){
 			this.unZoom();
@@ -176,6 +222,10 @@ HospitalLevel = ig.Game.extend({
 		}
 		*/
 		// Add your own, additional update code here
+	},
+	
+	setAchievementDisplayOff:function(){
+		this.displayingAchievement = false;
 	},
 	
 	startDialogue: function(){
@@ -208,6 +258,10 @@ HospitalLevel = ig.Game.extend({
 		// Draw all entities and backgroundMaps
         //this.font.draw( 'It Works!', x, y, ig.Font.ALIGN.CENTER );
 		this.parent();
+		if(this.achievement){
+			this.achievement.update();
+			this.achievement.draw(ig.system.width/2 - 75 , 200);
+		}
 		
         for(var i = 0; i < this.buttons.length; i++){
              this.buttons[i].draw();

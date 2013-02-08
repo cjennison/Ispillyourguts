@@ -295,6 +295,10 @@ EntityPlayer = ig.Entity.extend({
   		
   		if(this.attacking && other.name == "enemy"){
   			//console.log(other);
+  			if(!Data.firstKill){
+				ig.game.queAchievement("babysfirstkill");
+				Data.firstKill = true;
+			}
   			other.kill();
   		}
   		
@@ -315,6 +319,10 @@ EntityPlayer = ig.Entity.extend({
 	  		other.kill();
 	  		ig.game.enrage();
 	  		ig.game.unZoom();
+	  		if(!Data.firstExecution){
+				ig.game.queAchievement("sorethroat");
+				Data.firstExecution = true;
+			}
 		}, 1000)
 		
 	}
