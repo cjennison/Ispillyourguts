@@ -58,7 +58,7 @@ EntityPlayer = ig.Entity.extend({
 
 		this.addAnim('crouch', 0.1, [11,12,13]);
 		this.addAnim('crouchidle', 1, [12]);
-		this.addAnim('crouchwalk', 0.1, [13,14,13]);
+		this.addAnim('crouchwalk', 0.1, [13,14]);
 		this.addAnim('quickAttack', 0.1, [20,21,22,23,24], false);
 		this.addAnim('execution', 0.3, [31,32,33,34]);
 
