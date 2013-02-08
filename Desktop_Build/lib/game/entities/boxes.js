@@ -9,7 +9,7 @@ ig.module(
        
         
         size:{x:89,y:57},    
-        offset:{x:0, y:0},
+        offset:{x:0, y:2},
         animSheet: new ig.AnimationSheet('media/objects/boxes.png',68,63),
     
         init: function( x, y, settings ) {

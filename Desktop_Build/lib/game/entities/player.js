@@ -12,7 +12,7 @@ EntityPlayer = ig.Entity.extend({
 	// The players (collision) size is a bit smaller than the animation
 	// frames, so we have to move the collision box a bit (offset)
 	size: {x: 20, y:45},
-	offset: {x: 20, y: 8},
+	offset: {x: 20, y: 9},
 	
 	maxVel: {x: 100, y: 200},
 	friction: {x: 600, y: 0},
