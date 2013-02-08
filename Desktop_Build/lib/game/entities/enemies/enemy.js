@@ -94,15 +94,7 @@ EntityEnemy = ig.Entity.extend({
 		}
 		
 		// near an edge? return!
-		if( !ig.game.collisionMap.getTile(
-				this.pos.x + (this.flip ? +4 : this.size.x -4),
-				this.pos.y + this.size.y+1
-			)
-		) {
-			this.flip = !this.flip;
-			this.currentAnim.flip.x = this.flip;
-
-		}
+		
 		if(!this.alerted){
 			var xdir = this.flip ? -1 : 1;
 			this.vel.x = this.speed * xdir;
@@ -119,9 +111,19 @@ EntityEnemy = ig.Entity.extend({
         }
 				this.lastX = this.pos.x;
 
-		this.currentAnim.flip.x = this.flip;
-		
-		
+		//this.currentAnim.flip.x = this.flip;
+		if( !ig.game.collisionMap.getTile(
+				this.pos.x + (this.flip ? +4 : this.size.x -4),
+				this.pos.y + this.size.y+1
+			)
+		) {
+			
+			if(this.alerted == false){
+				this.flip = !this.flip;
+		}
+		}
+					this.currentAnim.flip.x = this.flip;
+
 		
 		this.parent();
 	},
@@ -142,7 +144,7 @@ EntityEnemy = ig.Entity.extend({
 
 			this.randomMovementTimer.reset();
 		}
-				this.currentAnim.flip.x = this.flip;
+		this.currentAnim.flip.x = this.flip;
 
 	},
 	
@@ -227,8 +229,8 @@ EntityEnemy = ig.Entity.extend({
 		this.dead = true;
 		this.currentAnim = this.anims.dying;
 		this.currentAnim.rewind();
-
-		
+		var pool = ig.game.spawnEntity(EntityBloodPool, this.pos.x + 0, this.pos.y+7);
+		ig.game.swapzIndex(pool, this);
 
 		
 		//this.parent();
@@ -237,6 +239,30 @@ EntityEnemy = ig.Entity.extend({
 	setExecution:function(){
 		this.beingExecuted = true;
 	}
+});
+
+
+EntityBloodPool = ig.Entity.extend({
+		size: {x: 8, y: 10},
+		animSheet: new ig.AnimationSheet( 'media/graphics/bloodpool.png', 60, 60 ),
+	
+		
+		init: function( x, y, settings ) {
+			this.parent( x, y, settings );
+			console.log(settings);
+			
+			this.addAnim( 'disperse', .3, [0,1,2,3,4,5], true);
+	        this.gravityFactor = 0;
+			
+		},
+		
+		update: function() {
+	      
+	        
+	        this.parent();
+		},
+	                                      
+	        
 });
 
 EntityDeathExplosion = ig.Entity.extend({

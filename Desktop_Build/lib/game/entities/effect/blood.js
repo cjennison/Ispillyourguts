@@ -19,15 +19,7 @@ EntityBlood = ig.Entity.extend({
         this.gravityFactor = 0;
 		
 	},
-	
-	setAlarm:function(){
-		this.currentAnim = this.anims.on;
-	},
-	
-	disableAlarm:function(){
-		this.currentAnim = this.anims.off;
-	},
-	
+
 	
 	update: function() {
       
