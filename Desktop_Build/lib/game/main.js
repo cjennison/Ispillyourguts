@@ -16,6 +16,7 @@ ig.module(
     'plugins.analog-stick',
     'game.screens.mainmenu',
     'game.screens.introduction',
+	'game.entities.objects.objects',
     'game.entities.enemies.enemy',
     'game.entities.player',
     'game.entities.ui.detectioneye',
@@ -125,7 +126,10 @@ HospitalLevel = ig.Game.extend({
          this.spawnEntity(EntityHospitalbed, 40, 470);
          this.spawnEntity(EntityBoxes, 400, 580);
          this.spawnEntity(EntityBoxes, 1280, 450);
-		         this.spawnEntity(EntityPlayer, 32, 480);
+         this.spawnEntity(EntitySurgicalTable, 160, 480);
+         this.spawnEntity(EntitySurgicalTable, 1590, 450);
+         
+		 this.spawnEntity(EntityPlayer, 32, 480);
 
          var nurse = this.spawnEntity(EntityEnemy, 490, 460);
          var nurse2 = this.spawnEntity(EntityEnemy, 1280, 460);
