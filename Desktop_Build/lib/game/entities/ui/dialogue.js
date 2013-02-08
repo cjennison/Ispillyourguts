@@ -60,7 +60,8 @@ EntityDialogue = ig.Entity.extend({
 			y = ig.system.height/2;
 		 
         	this.font.draw( this.textObject, x, y, ig.Font.ALIGN.CENTER );
-        	
+        ig.game.font.draw( 'PRESS ENTER TO SKIP', x + 90, 220, ig.Font.ALIGN.CENTER );
+
         
     },                  		                
 	

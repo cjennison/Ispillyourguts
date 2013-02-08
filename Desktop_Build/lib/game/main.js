@@ -276,9 +276,9 @@ HospitalLevel = ig.Game.extend({
 	createBlood: function(type, x, y, entity){
 		var blood = this.spawnEntity(EntityBlood, x, y);
 		ig.game.swapzIndex(blood, entity);
-		
 		var player = this.getEntitiesByType(EntityPlayer)[0];
-		ig.game.swapzIndex(blood, player);
+		ig.game.swapzIndex(player, blood);
+		
 
 		
 	},
@@ -364,7 +364,7 @@ HospitalLevel = ig.Game.extend({
          	width = 568;
          }
          
-         ig.System.drawMode = ig.System.DRAW.SUBPIXEL;
+         //ig.System.drawMode = ig.System.DRAW.SUBPIXEL;
          ig.Sound.use = [ig.Sound.FORMAT.CAF, ig.Sound.FORMAT.OGG, ig.Sound.FORMAT.MP3];
 		ig.main( '#canvas', Introduction, 60, width, height, 1 );
 
