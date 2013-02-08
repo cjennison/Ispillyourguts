@@ -38,8 +38,9 @@ EntityDialogue = ig.Entity.extend({
         	this.currentAnim.alpha -= .01;
         	this.font.alpha -= .01;
         	if(this.currentAnim.alpha <= 0){
-        		this.currentAnim.alpha = 1;
+        		this.currentAnim.alpha = .8;
         		this.font.alpha = 1;
+        		this.killTimer.reset();
         		this.killTimer = null;
         		this.kill();
         	}

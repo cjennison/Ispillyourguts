@@ -15,7 +15,8 @@ EntityBossDoctor = ig.Entity.extend({
 	animSheet: new ig.AnimationSheet( 'media/levels/hospital/bossDoc.png', 70, 60 ),
 	type: ig.Entity.TYPE.B, // Evil enemy group
 	collides: ig.Entity.COLLIDES.PASSIVE,
-	
+		hitSound: new ig.Sound("media/effects/Enemy Hit Gore.*"),
+
 	deadTimer:null,
 	
 	init: function( x, y, settings ) {
@@ -31,7 +32,7 @@ EntityBossDoctor = ig.Entity.extend({
 	decapitate:function(){
 		this.currentAnim = this.anims.dying;
 		this.deadTimer = new ig.Timer();
-		
+		this.hitSound.play();
 		if(!Data.doctorDecapitated){
 				ig.game.queAchievement("headsup");
 				Data.doctorDecapitated = true;
@@ -44,7 +45,14 @@ EntityBossDoctor = ig.Entity.extend({
 	update: function() {
 		if(this.deadTimer != null){
         if(this.deadTimer.delta() > 1.5){
-		this.currentAnim = this.anims.dead;
+			this.currentAnim = this.anims.dead;
+			
+
+        }
+        
+        if(this.deadTimer.delta() > 6){
+        	this.deadTimer = null;
+			ig.game.startDialogue("I need to find a way downstairs.")
         }
        }
         this.parent();
@@ -55,6 +63,8 @@ EntityBossDoctor = ig.Entity.extend({
 		this.dead = true;
 		
 		ig.game.spawnEntity(EntityHeadExplosion, this.pos.x, this.pos.y);
+		
+		
     }
 	
 	
