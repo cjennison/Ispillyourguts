@@ -1,0 +1,9 @@
+70x60
+
+Idle: 0,1,2,1
+Death:
+Unused
+Unused
+
+Head:
+15x15
